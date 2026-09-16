@@ -1,0 +1,179 @@
+/* ==========================================================================
+   Duminguz brand layer
+   Loaded AFTER style.css so it overrides the Awilo template.
+
+   Source of truth: Duminguz_brandBook.pdf, transcribed at
+   DuminguzHUB/docs/brand/brandbook.md. Do not invent values here.
+   ========================================================================== */
+
+:root {
+
+  /* --- palette, all ten, exactly as the brandbook prints them --------- */
+
+  /* Corrected 2026-09-16 against brandbook.md, which was itself corrected on
+     2026-08-31 from the PDF. The values previously here came from the old
+     Notion transcription: neon cyan #00EAFF and hot magenta #C623E8 do not
+     exist in this brand. It is sky blue and orchid on a warm near-black. */
+
+  /* ground */
+  --dgz-ink:        #1C1A18;   /* near-black, WARM. THE ground */
+  --dgz-bone:       #F3EBD5;   /* bone / warm cream. THE type colour */
+
+  /* sea -- core identity */
+  --dgz-sea-deep:   #195567;
+  --dgz-sea:        #3284C5;
+  --dgz-blue:       #73CAE7;   /* light sky blue, the brightest note. Not a neon */
+
+  /* canyon -- Paraiba, rusticity */
+  --dgz-canyon:     #8C2813;
+  --dgz-clay:       #BC6036;
+  --dgz-earth:      #906741;
+
+  /* cyberpunk -- the futurist half */
+  --dgz-purple:     #842484;
+  --dgz-orchid:     #A24795;   /* muted mid purple, not a hot magenta */
+
+  /* --- roles ---------------------------------------------------------- */
+  /* The palette is dark-first: ink is the ground, bone is the type, and
+     the other eight are accents, never surfaces. That is why the brand
+     reads as a lit object in a dark room rather than ink on paper. */
+
+  --dgz-bg:         var(--dgz-ink);
+  --dgz-fg:         var(--dgz-bone);
+  --dgz-fg-dim:     #9A9285;              /* bone, dropped for secondary text */
+  --dgz-accent:     var(--dgz-blue);      /* links, focus, active state */
+  --dgz-accent-2:   var(--dgz-orchid);    /* the second voice, used rarely */
+  --dgz-rule:       #2E2A26;              /* hairlines on the warm dark ground */
+
+  /* --- type ------------------------------------------------------------ */
+  /* The display face is isolated behind ONE property on purpose. TT Carvist
+     ships without a web licence as a recorded, accepted risk; if a notice
+     ever arrives, swapping to Big Shoulders Display is this one line.
+     See DuminguzHUB/docs/decisions/log.md, 2026-08-31. */
+
+  --dgz-font-display: "TT Carvist", "Big Shoulders Display", "Oswald", "Arial Narrow", sans-serif;
+  --dgz-font-body:    "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  /* Eyebrow = Medium, Header = DemiBold, Body = Regular, accent = Bold */
+  --dgz-w-eyebrow:  500;
+  --dgz-w-header:   600;
+  --dgz-w-body:     400;
+  --dgz-w-body-b:   700;
+}
+
+/* --------------------------------------------------------------------------
+   TT Carvist
+   Drop the web files into css/font/ and fill the paths below. Until they
+   exist the stack falls through to Big Shoulders Display, so the page never
+   renders in a default serif while this is pending.
+   -------------------------------------------------------------------------- */
+/*
+@font-face {
+  font-family: "TT Carvist";
+  src: url("font/TTCarvist-Medium.woff2") format("woff2");
+  font-weight: 500;
+  font-display: swap;
+}
+@font-face {
+  font-family: "TT Carvist";
+  src: url("font/TTCarvist-DemiBold.woff2") format("woff2");
+  font-weight: 600;
+  font-display: swap;
+}
+*/
+
+/* --------------------------------------------------------------------------
+   Application
+   Deliberately thin. The gallery is the subject; the page around it should
+   not compete with the artwork it exists to show.
+   -------------------------------------------------------------------------- */
+
+body {
+  background: var(--dgz-bg);
+  color: var(--dgz-fg);
+  font-family: var(--dgz-font-body);
+  font-weight: var(--dgz-w-body);
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--dgz-font-display);
+  font-weight: var(--dgz-w-header);
+  color: var(--dgz-fg);
+  letter-spacing: 0.01em;
+  text-wrap: balance;
+}
+
+/* The eyebrow role: small, spaced, above a heading */
+h5 {
+  font-weight: var(--dgz-w-eyebrow);
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--dgz-fg-dim);
+}
+
+a { color: var(--dgz-accent); }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--dgz-accent);
+  outline-offset: 3px;
+}
+
+::selection {
+  background: var(--dgz-accent);
+  color: var(--dgz-ink);
+}
+
+/* --------------------------------------------------------------------------
+   Template corrections
+   style.css was rewired on 2026-09-16: its hardcoded #ae45ff became
+   var(--dgz-accent) and its Rubik / Muli families became the brand tokens,
+   so the theme follows this file instead of fighting it. What is left below
+   is what tokens alone cannot express.
+   -------------------------------------------------------------------------- */
+
+/* The logo is an SVG with no intrinsic box, so the template's rules give it
+   zero width. Size it here, once. */
+.awilo_fn_header .logo img,
+.awilo_fn_sidebar_header .menu_logo img {
+  width: 164px;
+  height: auto;
+  max-width: 60vw;
+}
+
+/* Portfolio covers are composed plates, with a title and a role written into
+   the image. `cover` crops that text off, so these are fitted whole and the
+   ground shows through around them. */
+.awilo_fn_portfolio_grid .img_holder .awilo_fn_abs_img {
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-color: #14120F;
+}
+
+/* The template sizes each tile from a square spacer image, which leaves a
+   tall empty box under a wide cover. The plates are landscape, so the tile
+   is landscape too. */
+.awilo_fn_portfolio_grid .list_item .img_holder img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+/* The template footer ground is a cool violet-black, which fights the warm
+   near-black of the brand. */
+.awilo_fn_footer {
+  background-color: #141210;
+}
+
+/* Respect the viewer who asked for less movement. The template ships
+   parallax, jarallax and nicescroll, all of which ignore this by default. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

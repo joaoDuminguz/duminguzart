@@ -18,7 +18,7 @@ html {
 	margin: 0px
 }
 body{
-	font-family: "Muli";
+	font-family: var(--dgz-font-body);
 	font-size: 16px;
 	line-height: 1.5;
 	letter-spacing: 0.8px;
@@ -90,7 +90,7 @@ a.awilo_fn_circle_link:after{
     position: absolute;
     bottom: -2px;
     left: 100%;
-    background-color: #ae45ff;
+    background-color: var(--dgz-accent);
 	
 	-webkit-transition: left .5s ease,width .5s ease;
 	   -moz-transition: left .5s ease,width .5s ease;
@@ -204,7 +204,7 @@ a.awilo_fn_circle_link:hover:after{
 .awilo_fn_sidebar_header .menu_nav ul.vert_nav li > a{
 	text-decoration: none;
     color: #eee;
-    font-family: "Muli";
+    font-family: var(--dgz-font-body);
     text-transform: capitalize;
     font-weight: 600;
     display: block;
@@ -218,7 +218,7 @@ a.awilo_fn_circle_link:hover:after{
     transition: all .3s ease;
 }
 .awilo_fn_sidebar_header .menu_nav ul.vert_nav li > a:hover{
-	color: #ae45ff;
+	color: var(--dgz-accent);
 }
 .awilo_fn_sidebar_header .menu_nav ul.vert_nav li > a:before{
 	position: absolute;
@@ -292,7 +292,7 @@ a.awilo_fn_circle_link:hover:after{
 	text-align: center;
 }
 .awilo_fn_sidebar_header .social_list ul li a:hover{
-	color: #ae45ff;
+	color: var(--dgz-accent);
 }
 /*---------------------------------------------------*/
 /*	00) HEADER
@@ -445,9 +445,9 @@ a.awilo_fn_circle_link:hover:after{
 	margin: 0;
 	padding: 0;
 	font-size: 18px;
-	color: #ae45ff;
+	color: var(--dgz-accent);
 	letter-spacing: 0;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	font-weight: 400;
 	margin-bottom: 20px;
 }
@@ -456,9 +456,9 @@ a.awilo_fn_circle_link:hover:after{
 	padding: 0;
 	font-size: 72px;
 	line-height: 80px;
-	color: #ae45ff;
+	color: var(--dgz-accent);
 	letter-spacing: -0.25px;
-	font-family: 'Rubik';
+	font-family: var(--dgz-font-display);
 	font-weight: 400;
 	margin-bottom: 26px;
 }
@@ -471,7 +471,7 @@ a.awilo_fn_circle_link:hover:after{
 	font-size: 22px;
 	line-height: 30px;
 	color: #777;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 }
 .awilo_fn_about .about_left .about_desc{
 	margin-bottom: 63px;
@@ -485,9 +485,9 @@ a.awilo_fn_circle_link:hover:after{
 	border: none;
 	display: block;
 	float: left;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	text-decoration: none;
-	color: #ae45ff;
+	color: var(--dgz-accent);
 	font-size: 16px;
 	border-radius: 2px;
 	max-width: 100%;
@@ -507,7 +507,7 @@ a.awilo_fn_circle_link:hover:after{
 	transition: all .4s ease;
 	float: left;
 	padding: 0 37px;
-	border: 2px solid #ae45ff;
+	border: 2px solid var(--dgz-accent);
 }
 .awilo_fn_wrapper .awilo_fn_main_button span:nth-child(1){
 	transition: all .4s .2s ease;
@@ -562,12 +562,12 @@ a.awilo_fn_circle_link:hover:after{
 	color: #ccc;
 	font-size: 18px;
 	line-height: 24px;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	display: block;
 	transition: all .3s ease;
 }
 .awilo_fn_about .about_social a:hover{
-	color: #ae45ff;
+	color: var(--dgz-accent);
 }
 .awilo_fn_about .about_right{
 	width: 50%;
@@ -641,9 +641,9 @@ a.awilo_fn_circle_link:hover:after{
 .awilo_fn_title h5{
 	margin: 0;
 	padding: 0;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	font-size: 18px;
-	color: #ae45ff;
+	color: var(--dgz-accent);
 	letter-spacing: 0;
 	margin-bottom: 20px;
 	font-weight: 400;
@@ -655,7 +655,7 @@ a.awilo_fn_circle_link:hover:after{
 	line-height: 80px;
 	color: #eee;
 	letter-spacing: -0.25px;
-	font-family: 'Rubik';
+	font-family: var(--dgz-font-display);
 	font-weight: 400;
 }
 
@@ -720,7 +720,7 @@ a.awilo_fn_circle_link:hover:after{
 	color: #eee;
 	font-size: 16px;
 	line-height: 34px;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	width: 100%;
 	max-width: 100%;
 	padding: 0 2px;
@@ -735,7 +735,7 @@ a.awilo_fn_circle_link:hover:after{
 .awilo_fn_services .s_item h3{
 	margin: 0;
 	padding: 0;
-	font-family: 'Rubik';
+	font-family: var(--dgz-font-display);
 	color: #eee;
 	font-size: 24px;
 	letter-spacing: 0;
@@ -749,14 +749,14 @@ a.awilo_fn_circle_link:hover:after{
 	margin: 0;
 	padding: 0;
 	color: #777;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	margin-bottom: 27px;
 }
 .awilo_fn_services .s_item .s_btn a{
 	display: block;
 	float: left;
 	font-size: 16px;
-	color: #ae45ff;
+	color: var(--dgz-accent);
 	line-height: 24px;
 	text-decoration: none;
 }
@@ -783,7 +783,7 @@ a.awilo_fn_circle_link:hover:after{
 	color: #eee;
 	line-height: 40px;
 	font-weight: 400;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 }
 .awilo_fn_skills .s_list ul{
 	margin: 0;
@@ -811,7 +811,7 @@ a.awilo_fn_circle_link:hover:after{
 	line-height: 45px;
 	border: 1px solid rgba(255,255,255,.1);
 	border-radius: 3px;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	font-size: 16px;
 	color: #eeeeee;
 	letter-spacing: 0;
@@ -831,7 +831,7 @@ a.awilo_fn_circle_link:hover:after{
 	content: '';
     width: 20px;
     height: 1px;
-    background-color: #ae45ff;
+    background-color: var(--dgz-accent);
     position: absolute;
     top: 50%;
     left: 100%;
@@ -948,7 +948,7 @@ a.awilo_fn_circle_link:hover:after{
 	margin: 0;
 	padding: 0;
 	color: #bbb;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	font-size: 16px;
 	letter-spacing: 0;
 	margin-bottom: 4px;
@@ -964,7 +964,7 @@ a.awilo_fn_circle_link:hover:after{
 	margin: 0;
 	padding: 0;
 	font-size: 24px;
-	font-family: 'Rubik';
+	font-family: var(--dgz-font-display);
 	letter-spacing: 0;
 	font-weight: 400;
 }
@@ -974,7 +974,7 @@ a.awilo_fn_circle_link:hover:after{
 	transition: all .3s ease;
 }
 .awilo_fn_portfolio_grid .list_item .title_holder h3 a:hover{
-	color: #ae45ff;
+	color: var(--dgz-accent);
 }
 .awilo_fn_portfolio_grid ul li.tmwide50 .list_item .title_holder h3,
 .awilo_fn_portfolio_grid ul li.tmwide66 .list_item .title_holder h3,
@@ -1022,7 +1022,7 @@ a.awilo_fn_circle_link:hover:after{
 	line-height: 40px;
 	color: #eee;
 	letter-spacing: 0;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	font-weight: 400;
 	margin-bottom: 31px;
 }
@@ -1073,7 +1073,7 @@ a.awilo_fn_circle_link:hover:after{
     line-height: 40px;
     color: #eee;
     letter-spacing: 0;
-    font-family: 'Muli';
+    font-family: var(--dgz-font-body);
     font-weight: 400;
     margin-bottom: 45px;
 }
@@ -1121,7 +1121,7 @@ a.awilo_fn_circle_link:hover:after{
 	bottom: 14px;
 	left: 50%;
 	margin-left: -14px;
-	color: #ae45ff;
+	color: var(--dgz-accent);
 }
 .awilo_fn_reviews .r_item .r_review{
 	margin-bottom: 32px;
@@ -1132,7 +1132,7 @@ a.awilo_fn_circle_link:hover:after{
 .awilo_fn_reviews .r_item .r_desc p{
 	margin: 0;
 	padding: 0;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	letter-spacing: 0;
 	font-size: 16px;
 	line-height: 24px;
@@ -1169,7 +1169,7 @@ a.awilo_fn_circle_link:hover:after{
 	font-size: 18px;
 	color: #eee;
 	letter-spacing: 0;
-	font-family: 'Rubik';
+	font-family: var(--dgz-font-display);
 	font-weight: 400;
 	margin-bottom: 3px;
 }
@@ -1179,7 +1179,7 @@ a.awilo_fn_circle_link:hover:after{
 	font-size: 16px;
 	color: #777;
 	letter-spacing: 0;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	font-weight: 400;
 }
 .awilo_fn_reviews .swiper-wrapper{
@@ -1208,7 +1208,7 @@ a.awilo_fn_circle_link:hover:after{
 	display: block;
 	float: left;
 	font-size: 18px;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	letter-spacing: 0;
 	color: #eee;
 	height: 22px;
@@ -1337,11 +1337,11 @@ a.awilo_fn_circle_link:hover:after{
 	line-height: 100px;
 	border-radius: 100%;
 	background-color: #1e1427;
-	font-family: 'Rubik';
+	font-family: var(--dgz-font-display);
 	font-size: 30px;
 	letter-spacing: 0;
 	margin: 0;
-	color: #ae45ff;
+	color: var(--dgz-accent);
 	font-weight: 400;
 	position: absolute;
 	left: 0;
@@ -1410,7 +1410,7 @@ a.awilo_fn_circle_link:hover:after{
 	transition: all .3s ease;
 }
 .awilo_fn_blog_list .title_wrapper .title_holder p{
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	margin: 0;
 	padding: 0;
 	font-size: 18px;
@@ -1422,7 +1422,7 @@ a.awilo_fn_circle_link:hover:after{
 	margin: 0;
 	padding: 0;
 	font-size: 30px;
-	font-family: 'Rubik';
+	font-family: var(--dgz-font-display);
 	letter-spacing: 0;
 	font-weight: 400;
 	line-height: 1.2;
@@ -1457,7 +1457,7 @@ a.awilo_fn_circle_link:hover:after{
 	}
 	.awilo_fn_blog_list .blog_item:hover .title_wrapper .b_arrow .awilo_fn_svg,
 	.awilo_fn_blog_list .blog_item:hover .title_wrapper .title_holder h3 a{
-		color: #ae45ff;
+		color: var(--dgz-accent);
 	}
 	.awilo_fn_blog_list .blog_item:hover .b_counter{
 		transform: translate3d(0px,0px,0px) scale(0);
@@ -1517,7 +1517,7 @@ a.awilo_fn_circle_link:hover:after{
 	line-height: 1;
 	font-size: 18px;
 	letter-spacing: 0;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	color: #777;
 	background-color: transparent;
 	margin-bottom: 40px;
@@ -1551,7 +1551,7 @@ a.awilo_fn_circle_link:hover:after{
 	padding: 0;
 	font-size: 16px;
 	color: #777;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	letter-spacing: 0;
 	font-weight: 400;
 	margin-bottom: 7px;
@@ -1561,7 +1561,7 @@ a.awilo_fn_circle_link:hover:after{
 	margin: 0;
 	padding: 0;
 	letter-spacing: 0;
-	font-family: 'Rubik';
+	font-family: var(--dgz-font-display);
 	color: #eee;
 	font-weight: 400;
 }
@@ -1593,7 +1593,7 @@ a.awilo_fn_circle_link:hover:after{
 	font-size: 72px;
 	line-height: 80px;
 	letter-spacing: -0.25px;
-	font-family: 'Rubik';
+	font-family: var(--dgz-font-display);
 	font-weight: 400;
 	color: #eee;
 }
@@ -1658,7 +1658,7 @@ a.awilo_fn_circle_link:hover:after{
 	font-size: 18px;
 	letter-spacing: -0.25px;
 	color: #eee;
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 }
 /*---------------------------------------------------*/
 /*	19) Shortcode: Video
@@ -1703,7 +1703,7 @@ a.awilo_fn_circle_link:hover:after{
 	text-decoration: none;
 	color: #ebebeb;
 	font-size: 30px;
-	font-family: 'Rubik';
+	font-family: var(--dgz-font-display);
 	line-height: 60px;
 	font-weight: 400;
 	border-top-right-radius: 3px;
@@ -1728,7 +1728,7 @@ a.awilo_fn_circle_link:hover:after{
 	top: 0;
 	bottom: 0;
 	z-index: -1;
-	background-color: rgba(174,69,255,.1);
+	background-color: rgba(115,202,231,.12);
 }
 .awilo_fn_video .video_inner .icon{
 	width: 60px;
@@ -1800,7 +1800,7 @@ a.awilo_fn_circle_link:hover:after{
     line-height: 40px;
     color: #eee;
     letter-spacing: 0;
-    font-family: 'Muli';
+    font-family: var(--dgz-font-body);
     font-weight: 400;
     margin-bottom: 45px;
 }
@@ -1863,7 +1863,7 @@ a.awilo_fn_circle_link:hover:after{
 	z-index: 5;
 }
 .awilo_fn_partners .flip__back span{
-	font-family: 'Muli';
+	font-family: var(--dgz-font-body);
 	font-size: 18px;
 	color: #eee;
 }
@@ -1904,7 +1904,7 @@ a.awilo_fn_circle_link:hover:after{
 	position: absolute;
 	content: '';
 	left: 0;
-	background-color: #ae45ff;
+	background-color: var(--dgz-accent);
 }
 .awilo_fn_partners .r_plus span:before{
 	width: 2px;
@@ -1914,7 +1914,7 @@ a.awilo_fn_circle_link:hover:after{
 	position: absolute;
 	content: '';
 	top: 0;
-	background-color: #ae45ff;
+	background-color: var(--dgz-accent);
 }
 .awilo_fn_partners .r_item{
 	opacity: .3;
