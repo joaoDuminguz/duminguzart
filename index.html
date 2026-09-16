@@ -18,7 +18,7 @@
 <meta property="og:image" content="https://duminguz.art/img/portfolio/cosmogene.jpg">
 <meta name="theme-color" content="#1C1A18">
 
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 
 <title>Joao Duminguz | Game Artist, 2D, Pixel Art and Stylized 3D</title>
 
@@ -164,55 +164,20 @@
 
 				<!-- Shortcode: Portfolio Grid -->
 				<!-- li extra classes: tmwide25 - 25%, tmwide33 - 33.(3)%, tmwide50 - 50%, tmwide66 - 66,(6)%,tmwide75 - 75%, tmwide100 - 100% --->
+				<!-- f-* classes are the portfolio slots; a tile may carry more than one -->
+				<div class="dgz_filter">
+					<button type="button" class="dgz_filter_btn active" data-filter="*">All</button>
+					<button type="button" class="dgz_filter_btn" data-filter=".f-games">Game Projects</button>
+					<button type="button" class="dgz_filter_btn" data-filter=".f-pixel">Pixel Art</button>
+					<button type="button" class="dgz_filter_btn" data-filter=".f-character">Character Art</button>
+					<button type="button" class="dgz_filter_btn" data-filter=".f-illustration">Illustration</button>
+				</div>
+
 				<div class="awilo_fn_portfolio_grid">
 					<ul class="awilo_fn_masonry">
 						<li class="grid-sizer"></li>
 
-						<li class="awilo_fn_masonry_in tmwide66">
-							<div class="list_item">
-								<div class="img_holder">
-									<img src="img/thumb/thumb-420-420.jpg" alt="" />
-									<div class="awilo_fn_abs_img" data-bg-img="img/portfolio/cosmogene.jpg"></div>
-								</div>
-								<div class="title_holder">
-									<div class="title_abs"><div class="layer" data-depth="0.3"></div></div>
-									<div class="title_cat">
-										<p>
-											<span class="awilo_fn_circle_link">Concept Art</span>
-											<span class="sep">/</span>
-											<span class="awilo_fn_circle_link">Creature Design</span>
-										</p>
-									</div>
-									<div class="title_name">
-										<h3><a href="https://www.artstation.com/artwork/AZLXZz" target="_blank" rel="noopener">The Concept Art of Cosmogene</a></h3>
-									</div>
-								</div>
-							</div>
-						</li>
-
-						<li class="awilo_fn_masonry_in">
-							<div class="list_item">
-								<div class="img_holder">
-									<img src="img/thumb/thumb-420-420.jpg" alt="" />
-									<div class="awilo_fn_abs_img" data-bg-img="img/portfolio/rot.jpg"></div>
-								</div>
-								<div class="title_holder">
-									<div class="title_abs"><div class="layer" data-depth="0.3"></div></div>
-									<div class="title_cat">
-										<p>
-											<span class="awilo_fn_circle_link">3D Character</span>
-											<span class="sep">/</span>
-											<span class="awilo_fn_circle_link">Game Ready</span>
-										</p>
-									</div>
-									<div class="title_name">
-										<h3><a href="https://www.artstation.com/artwork/NrGllD" target="_blank" rel="noopener">Rot, stylized cyberpunk character</a></h3>
-									</div>
-								</div>
-							</div>
-						</li>
-
-						<li class="awilo_fn_masonry_in">
+						<li class="awilo_fn_masonry_in f-games tmwide66">
 							<div class="list_item">
 								<div class="img_holder">
 									<img src="img/thumb/thumb-420-420.jpg" alt="" />
@@ -234,7 +199,29 @@
 							</div>
 						</li>
 
-						<li class="awilo_fn_masonry_in tmwide66">
+						<li class="awilo_fn_masonry_in f-character">
+							<div class="list_item">
+								<div class="img_holder">
+									<img src="img/thumb/thumb-420-420.jpg" alt="" />
+									<div class="awilo_fn_abs_img" data-bg-img="img/portfolio/rot.jpg"></div>
+								</div>
+								<div class="title_holder">
+									<div class="title_abs"><div class="layer" data-depth="0.3"></div></div>
+									<div class="title_cat">
+										<p>
+											<span class="awilo_fn_circle_link">3D Character</span>
+											<span class="sep">/</span>
+											<span class="awilo_fn_circle_link">Game Ready</span>
+										</p>
+									</div>
+									<div class="title_name">
+										<h3><a href="https://www.artstation.com/artwork/NrGllD" target="_blank" rel="noopener">Rot, stylized cyberpunk character</a></h3>
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li class="awilo_fn_masonry_in f-pixel f-games">
 							<div class="list_item">
 								<div class="img_holder">
 									<img src="img/thumb/thumb-420-420.jpg" alt="" />
@@ -256,7 +243,73 @@
 							</div>
 						</li>
 
-						<li class="awilo_fn_masonry_in">
+						<li class="awilo_fn_masonry_in f-illustration f-games tmwide66">
+							<div class="list_item">
+								<div class="img_holder">
+									<img src="img/thumb/thumb-420-420.jpg" alt="" />
+									<div class="awilo_fn_abs_img" data-bg-img="img/portfolio/cosmogene.jpg"></div>
+								</div>
+								<div class="title_holder">
+									<div class="title_abs"><div class="layer" data-depth="0.3"></div></div>
+									<div class="title_cat">
+										<p>
+											<span class="awilo_fn_circle_link">Concept Art</span>
+											<span class="sep">/</span>
+											<span class="awilo_fn_circle_link">Creature Design</span>
+										</p>
+									</div>
+									<div class="title_name">
+										<h3><a href="https://www.artstation.com/artwork/AZLXZz" target="_blank" rel="noopener">The Concept Art of Cosmogene</a></h3>
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li class="awilo_fn_masonry_in f-illustration">
+							<div class="list_item">
+								<div class="img_holder">
+									<img src="img/thumb/thumb-420-420.jpg" alt="" />
+									<div class="awilo_fn_abs_img" data-bg-img="img/portfolio/m-vampire.jpg"></div>
+								</div>
+								<div class="title_holder">
+									<div class="title_abs"><div class="layer" data-depth="0.3"></div></div>
+									<div class="title_cat">
+										<p>
+											<span class="awilo_fn_circle_link">Visual Development</span>
+											<span class="sep">/</span>
+											<span class="awilo_fn_circle_link">Art Direction</span>
+										</p>
+									</div>
+									<div class="title_name">
+										<h3><a href="https://www.artstation.com/artwork/eR2k9Y" target="_blank" rel="noopener">M, the Vampire of Love Island</a></h3>
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li class="awilo_fn_masonry_in f-character">
+							<div class="list_item">
+								<div class="img_holder">
+									<img src="img/thumb/thumb-420-420.jpg" alt="" />
+									<div class="awilo_fn_abs_img" data-bg-img="img/portfolio/gallows.jpg"></div>
+								</div>
+								<div class="title_holder">
+									<div class="title_abs"><div class="layer" data-depth="0.3"></div></div>
+									<div class="title_cat">
+										<p>
+											<span class="awilo_fn_circle_link">3D Character</span>
+											<span class="sep">/</span>
+											<span class="awilo_fn_circle_link">Game Ready</span>
+										</p>
+									</div>
+									<div class="title_name">
+										<h3><a href="https://www.artstation.com/artwork/RqnwJA" target="_blank" rel="noopener">Gallows, cyberpunk character</a></h3>
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li class="awilo_fn_masonry_in f-pixel f-games tmwide66">
 							<div class="list_item">
 								<div class="img_holder">
 									<img src="img/thumb/thumb-420-420.jpg" alt="" />
@@ -278,7 +331,7 @@
 							</div>
 						</li>
 
-						<li class="awilo_fn_masonry_in">
+						<li class="awilo_fn_masonry_in f-pixel f-games">
 							<div class="list_item">
 								<div class="img_holder">
 									<img src="img/thumb/thumb-420-420.jpg" alt="" />
@@ -300,7 +353,29 @@
 							</div>
 						</li>
 
-						<li class="awilo_fn_masonry_in">
+						<li class="awilo_fn_masonry_in f-character">
+							<div class="list_item">
+								<div class="img_holder">
+									<img src="img/thumb/thumb-420-420.jpg" alt="" />
+									<div class="awilo_fn_abs_img" data-bg-img="img/portfolio/cyberpunk-weapons.jpg"></div>
+								</div>
+								<div class="title_holder">
+									<div class="title_abs"><div class="layer" data-depth="0.3"></div></div>
+									<div class="title_cat">
+										<p>
+											<span class="awilo_fn_circle_link">Prop Art</span>
+											<span class="sep">/</span>
+											<span class="awilo_fn_circle_link">Texturing</span>
+										</p>
+									</div>
+									<div class="title_name">
+										<h3><a href="https://www.artstation.com/artwork/o0AmQm" target="_blank" rel="noopener">Cyberpunk Weapons, stylized texture</a></h3>
+									</div>
+								</div>
+							</div>
+						</li>
+
+						<li class="awilo_fn_masonry_in f-illustration">
 							<div class="list_item">
 								<div class="img_holder">
 									<img src="img/thumb/thumb-420-420.jpg" alt="" />
@@ -498,6 +573,22 @@
 <script src="js/nicescroll.js"></script>
 <script src="js/magnific-popup.js"></script>
 <script src="js/init.js"></script>
+
+<!-- Portfolio slot filter. Isotope is already initialised by init.js, so this
+     only has to talk to the existing instance. -->
+<script>
+jQuery(function ($) {
+	var grid = $('.awilo_fn_masonry');
+	if (!grid.length || !$().isotope) { return; }
+
+	$('.dgz_filter').on('click', '.dgz_filter_btn', function () {
+		var $btn = $(this);
+		$('.dgz_filter_btn').removeClass('active').attr('aria-pressed', 'false');
+		$btn.addClass('active').attr('aria-pressed', 'true');
+		grid.isotope({ filter: $btn.data('filter') });
+	});
+});
+</script>
 <!-- /SCRIPTS -->
 
 </body>
