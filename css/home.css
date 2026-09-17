@@ -1,0 +1,593 @@
+/* ==========================================================================
+   Duminguz home page — DGZ_homePage
+
+   Built from Figma file kTQ4xLTJJ16sMcs4JTvRRg, node 2286:3380, measured
+   2026-09-17. The design canvas is 1920 x 3086; every position below is that
+   measurement divided by 1920, so the layout is João's at desktop and scales
+   instead of breaking.
+
+   Loads AFTER brand.css and uses only its tokens. Does NOT load style.css --
+   this page shares nothing with the Awilo template.
+
+   THE LAYOUT IS THE ART DIRECTOR'S. Do not "improve" alignment, symmetry or
+   structure here. Improvements go to him as suggestions; he edits the Figma.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   Values measured from the file
+   -------------------------------------------------------------------------- */
+:root {
+  /* A band is 1920 x 335.2987 */
+  --band-ratio: 1920 / 335.2987;
+
+  /* The side tab vector: 725.623 x 387.093, bleeding 27.26 past the edge and
+     overhanging the band 24.53 above and 27.29 below. */
+  --tab-w:        37.79%;   /* 725.623 / 1920 */
+  --tab-bleed:    -1.42%;   /* -27.26  / 1920 */
+  --tab-height:   115.45%;  /* 387.093 / 335.2987 */
+  --tab-rise:     -7.32%;   /* -24.53  / 335.2987 */
+  --tab-slant:    13.38%;   /* (387.093 - 335.2987) / 387.093 */
+
+  /* Slot4's Rectangle 14 is 1976.354 wide, not a tab -- a panel across the
+     whole band, which is why that band carries two labels on one artwork. */
+  --panel-w:      102.94%;  /* 1976.354 / 1920 */
+
+  /* Label left offsets, measured */
+  --label-character:  4.852%;   /*   93.164 / 1920 */
+  --label-gameart:   72.078%;   /* 1383.903 / 1920 */
+  --label-illus:      7.693%;   /*  147.706 / 1920 */
+  --label-concept:   66.266%;   /* 1272.294 / 1920 */
+
+  /* Content column */
+  --pad-x:            4.323%;   /*   83.0   / 1920 */
+
+  /* Type, from the file's own tokens */
+  --t-display:  clamp(2.1rem, 7.292vw, 140px);  /* band labels, 140 */
+  --t-header:   clamp(1.9rem, 3.750vw,  72px);  /* Header_Duminguz,  72 */
+  --t-eyebrow:  clamp(1.3rem, 2.500vw,  48px);  /* Eyebrown_Duminguz, 48 */
+  --t-body:     clamp(1rem,   1.458vw,  28px);  /* Body_Duminguz,     28 */
+
+  /* The display drop: solid, zero blur. A type treatment, not a contrast fix. */
+  --display-drop: 0 4px 0 var(--dgz-purple);
+
+  /* --- NOT YET READ FROM THE FILE ------------------------------------------
+     The Figma MCP call budget ran out before these could be sampled. Each is
+     one line to correct. Flagged to João 2026-09-17.
+       --header-fill      the header bar, and its hanging tab (a boolean
+                          subtract that needs the SVG, not a CSS approximation)
+       --tab-slant-dir    which way the side tabs lean
+       --panel-grad-*     Slot4's panel gradient
+       --avatar-frame     the four corner brackets
+       --btn-social-*     the social button treatment
+     ---------------------------------------------------------------------- */
+  --header-fill:      var(--dgz-ink);
+  --panel-grad-a:     var(--dgz-purple);
+  --panel-grad-b:     var(--dgz-orchid);
+  --avatar-frame:     var(--dgz-blue);
+  --btn-social-fg:    var(--dgz-bone);
+  --btn-social-edge:  var(--dgz-bone);
+}
+
+/* --------------------------------------------------------------------------
+   Reset, scoped to this page
+   -------------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body.dgz-home {
+  margin: 0;
+  /* Several frames are wider than 1920 on purpose (the header at 1944.6, the
+     opening at 1979.8, the footer at 1934.6). That bleed must not become a
+     horizontal scrollbar. */
+  overflow-x: hidden;
+}
+
+body.dgz-home img { display: block; max-width: 100%; }
+
+.dgz-home .visually-hidden {
+  position: absolute; width: 1px; height: 1px;
+  margin: -1px; padding: 0; overflow: hidden;
+  clip-path: inset(50%); white-space: nowrap;
+}
+
+/* ==========================================================================
+   Header -- 1944.6 x 117.9, bleeding both sides
+   ========================================================================== */
+.dgz-header {
+  position: relative;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  height: clamp(64px, 6.14vw, 118px);
+  padding: 0 var(--pad-x);
+  background: var(--header-fill);
+}
+
+.dgz-header__logo img {
+  width: clamp(104px, 8.958vw, 172px);  /* 172 / 1920 */
+  height: auto;
+}
+
+/* The menu button is 80 x 80 at x=1778.6 */
+.dgz-menu-btn {
+  display: grid;
+  place-items: center;
+  gap: 5px;
+  width: clamp(44px, 4.167vw, 80px);
+  height: clamp(44px, 4.167vw, 80px);
+  padding: 0;
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.dgz-menu-btn span {
+  display: block;
+  width: clamp(22px, 2.08vw, 40px);
+  height: 3px;
+  background: var(--dgz-bone);
+  transition: transform .22s ease, opacity .22s ease;
+}
+
+.dgz-menu-btn[aria-expanded="true"] span:nth-child(1) { transform: translateY(8px) rotate(45deg); }
+.dgz-menu-btn[aria-expanded="true"] span:nth-child(2) { opacity: 0; }
+.dgz-menu-btn[aria-expanded="true"] span:nth-child(3) { transform: translateY(-8px) rotate(-45deg); }
+
+/* --- the panel ------------------------------------------------------------
+   Content from site-pages-phase2.md §1: the four bands in band order, then
+   the two pages that convert, then contact. The categories come first so the
+   menu teaches the site's structure rather than listing links.
+   A category without a page yet is present but inert -- the same graceful
+   degradation the bands use. */
+.dgz-menu {
+  position: absolute;
+  top: 100%;
+  right: 0;
+  z-index: 45;
+  min-width: min(420px, 88vw);
+  padding: 28px var(--pad-x) 32px;
+  background: var(--dgz-ink);
+  border-top: 3px solid var(--dgz-purple);
+}
+
+.dgz-menu[hidden] { display: none; }
+
+.dgz-menu ul { margin: 0; padding: 0; list-style: none; }
+
+.dgz-menu a,
+.dgz-menu span.dgz-menu__soon {
+  display: block;
+  padding: 10px 0;
+  font-family: var(--dgz-font-display);
+  font-weight: var(--dgz-w-header);
+  font-size: clamp(1.25rem, 2vw, 34px);
+  line-height: 1.1;
+  letter-spacing: .02em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--dgz-bone);
+}
+
+.dgz-menu a:hover,
+.dgz-menu a:focus-visible { color: var(--dgz-blue); }
+
+/* Not built yet. Says so, rather than pretending to be a link. */
+.dgz-menu span.dgz-menu__soon { color: var(--dgz-fg-dim); cursor: default; }
+
+.dgz-menu__rule {
+  height: 1px;
+  margin: 14px 0;
+  background: var(--dgz-rule);
+  border: 0;
+}
+
+/* ==========================================================================
+   OpenSection -- 1979.8 x 1025.1
+   ========================================================================== */
+.dgz-open {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(40px, 9.62vw, 185px) 0 0;   /* "Hello!" sits at y=184.6 */
+}
+
+/* BG_DGZ_img is a 989.9 square on the RIGHT half, under Rectangle 9 at 92%
+   ink -- so the artwork reads as a whisper of texture, not a picture. */
+.dgz-open__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("../img/home/open-backdrop.webp");
+  background-position: right top;
+  background-repeat: no-repeat;
+  background-size: auto 100%;
+}
+
+.dgz-open__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(28, 26, 24, 0.92);   /* Rectangle 9 */
+}
+
+.dgz-open__inner {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: flex-start;
+  gap: clamp(32px, 5vw, 96px);
+  padding: 0 var(--pad-x) clamp(48px, 4.5vw, 86px);
+}
+
+.dgz-open__text { flex: 1 1 auto; min-width: 0; max-width: 928px; }  /* 890 + pad */
+
+.dgz-eyebrow {
+  margin: 0 0 clamp(8px, 0.9vw, 17px);
+  font-family: var(--dgz-font-display);
+  font-weight: var(--dgz-w-eyebrow);
+  font-size: var(--t-eyebrow);
+  line-height: 1;
+  color: var(--dgz-bone);
+}
+
+.dgz-open__text h1 {
+  margin: 0 0 clamp(20px, 2.1vw, 40px);
+  max-width: 797px;
+  font-family: var(--dgz-font-display);
+  font-weight: var(--dgz-w-header);
+  font-size: var(--t-header);
+  line-height: 1.18;
+  letter-spacing: .01em;
+  color: var(--dgz-bone);
+}
+
+.dgz-lede p {
+  margin: 0 0 1em;
+  max-width: 890px;
+  font-size: var(--t-body);
+  line-height: 1.45;
+  letter-spacing: 0.04em;    /* 1.12px at 28 */
+  color: #fff;               /* pure white in the file, not bone */
+}
+
+.dgz-lede p:last-child { margin-bottom: 0; }
+
+/* --- the action row, y=873.4 --------------------------------------------- */
+.dgz-open__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: clamp(10px, 0.9vw, 17px);
+  margin-top: clamp(28px, 3.2vw, 62px);
+}
+
+/* Button_Artstation / Linkedin / Behance -- 184.5 x 60 */
+.dgz-btn-social {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-width: clamp(132px, 9.61vw, 184.5px);
+  height: clamp(44px, 3.125vw, 60px);
+  padding: 0 18px;
+  font-family: var(--dgz-font-body);
+  font-weight: 500;
+  font-size: clamp(.8rem, .9vw, 17px);
+  letter-spacing: .06em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--btn-social-fg);
+  background: transparent;
+  border: 2px solid var(--btn-social-edge);
+}
+
+.dgz-btn-social:hover,
+.dgz-btn-social:focus-visible {
+  color: var(--dgz-ink);
+  background: var(--dgz-blue);
+  border-color: var(--dgz-blue);
+}
+
+/* SeeWork_Button -- 307 x 80, blue fill, purple label, with an arrow */
+.dgz-btn-primary {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  min-width: clamp(210px, 15.99vw, 307px);
+  height: clamp(52px, 4.167vw, 80px);
+  margin-left: auto;          /* the file puts it right of the social row */
+  padding: 0 26px;
+  font-family: var(--dgz-font-body);
+  font-weight: 500;
+  font-size: clamp(.95rem, 1.458vw, 28px);
+  letter-spacing: .04em;
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--dgz-purple);    /* #842484 on #73CAE7, read from the file */
+  background: var(--dgz-blue);
+  transition: filter .2s ease, transform .2s ease;
+}
+
+.dgz-btn-primary:hover,
+.dgz-btn-primary:focus-visible { filter: brightness(1.08); transform: translateY(-2px); }
+
+.dgz-btn-primary svg { flex: none; width: 22px; height: 13px; fill: currentColor; }
+
+/* --- Avatar -- 665.8 x 667.8, image 619.6 inset by 23.1 ------------------ */
+.dgz-avatar {
+  position: relative;
+  flex: 0 0 auto;
+  width: clamp(220px, 34.68vw, 665.8px);
+  margin: 0;
+  aspect-ratio: 665.8 / 667.8;
+}
+
+.dgz-avatar img {
+  position: absolute;
+  top: 3.28%; left: 3.47%;          /* 23.08 / 665.8 */
+  width: 93.06%;                     /* 619.64 / 665.8 */
+  height: auto;
+}
+
+/* Group 1 -- four 223.6 squares at the four corners. Corner brackets. */
+.dgz-avatar__frame,
+.dgz-avatar__frame::before,
+.dgz-avatar__frame::after,
+.dgz-avatar__frame span {
+  position: absolute;
+  width: 33.58%;                     /* 223.593 / 665.8 */
+  aspect-ratio: 1;
+  border: 3px solid var(--avatar-frame);
+}
+
+.dgz-avatar__frame { top: 0; left: 0; border: 0; width: 100%; height: 100%; }
+.dgz-avatar__frame::before { content: ""; top: 0; left: 0; }
+.dgz-avatar__frame::after  { content: ""; top: 0; right: 0; }
+.dgz-avatar__frame span:nth-child(1) { bottom: 0; left: 0; }
+.dgz-avatar__frame span:nth-child(2) { bottom: 0; right: 0; }
+
+/* Divider -- 1920 x 6.7 */
+.dgz-divider {
+  height: 6.7px;
+  background: var(--dgz-purple);
+  border: 0;
+  margin: 0;
+}
+
+/* ==========================================================================
+   WorkSection -- the four bands
+   ========================================================================== */
+.dgz-work { padding: clamp(36px, 4.7vw, 90px) 0 0; }
+
+.dgz-work__hook {
+  margin: 0 var(--pad-x) clamp(28px, 3.5vw, 67px);
+  font-family: var(--dgz-font-display);
+  font-weight: var(--dgz-w-header);
+  font-size: var(--t-header);
+  line-height: 1.14;
+  text-align: center;
+  color: var(--dgz-bone);
+}
+
+/* Measured gaps: 29.394 between bands 1-2 and 3-4, but 16.563 between 2-3.
+   Reproduced as measured. The inconsistency is flagged to João, not fixed
+   here -- see site-pages-phase2.md §7. */
+.dgz-band {
+  position: relative;
+  display: flex;
+  align-items: center;      /* every label is vertically centred, exactly */
+  aspect-ratio: var(--band-ratio);
+  overflow: hidden;         /* the band clips the tab's overhang */
+  background: var(--dgz-ink);
+}
+
+.dgz-band + .dgz-band { margin-top: 1.531%; }            /* 29.394 / 1920 */
+.dgz-band--gameart     { margin-top: 0.863% !important; } /* 16.563 / 1920 */
+
+.dgz-band__art {
+  position: absolute;
+  inset: 0;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+/* The side tab. A parallelogram in a 725.6 x 387.1 box that the band clips. */
+.dgz-band__tab {
+  position: absolute;
+  top: var(--tab-rise);
+  width: var(--tab-w);
+  height: var(--tab-height);
+  clip-path: polygon(0 0, 100% var(--tab-slant), 100% 100%, 0 calc(100% - var(--tab-slant)));
+}
+
+.dgz-band__tab--left  { left: var(--tab-bleed); background: linear-gradient(90deg, var(--dgz-purple), var(--dgz-orchid)); }
+.dgz-band__tab--right { right: var(--tab-bleed); background: linear-gradient(270deg, var(--dgz-sea-deep), var(--dgz-sea)); }
+
+/* Slot4: Rectangle 14 spans the whole band, so both labels sit on one panel. */
+.dgz-band__panel {
+  position: absolute;
+  top: var(--tab-rise);
+  left: 50%;
+  width: var(--panel-w);
+  height: var(--tab-height);
+  transform: translateX(-50%);
+  background: linear-gradient(90deg, var(--panel-grad-a), var(--panel-grad-b));
+}
+
+.dgz-band__label {
+  position: relative;
+  z-index: 2;
+  font-family: var(--dgz-font-display);
+  font-weight: var(--dgz-w-header);
+  font-size: var(--t-display);
+  line-height: 1;
+  letter-spacing: .02em;         /* 2.8px at 140 */
+  color: var(--dgz-bone);
+  text-shadow: var(--display-drop);
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+a.dgz-band__label:hover,
+a.dgz-band__label:focus-visible { color: var(--dgz-blue); }
+
+/* Positioned by measured left offset, except Pixel Art, which is centred. */
+.dgz-band--character .dgz-band__label { margin-left: var(--label-character); }
+.dgz-band--pixel                      { justify-content: center; }
+.dgz-band--gameart   .dgz-band__label { margin-left: var(--label-gameart); }
+
+/* Band 4 carries two labels far apart (147.7 and 1272.3). A margin on the
+   second flex item measures from the first item's end, not from the band, so
+   these two are placed absolutely against the band instead. */
+.dgz-band--illusconcept .dgz-band__label {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.dgz-band--illusconcept .dgz-band__label:first-of-type { left: var(--label-illus); }
+.dgz-band--illusconcept .dgz-band__label:last-of-type  { left: var(--label-concept); }
+
+/* Pixel art must not be resampled. */
+.dgz-band--pixel .dgz-band__art {
+  image-rendering: pixelated;
+  background-size: 100% 100%;
+}
+
+/* The HemoQuest HUD is a separate crisp layer over the Game Art band.
+   Its frame sits at y=1955.702, which is the band's own top edge -- so the HUD
+   is pinned to the TOP of the band, not the bottom. */
+.dgz-band__hud {
+  position: absolute;
+  top: 0;
+  left: 0.502%;                 /* 9.634 / 1920 */
+  width: 69.14%;                /* 1327.583 / 1920 */
+  z-index: 1;
+}
+
+/* ==========================================================================
+   Rodape -- 1934.6 wide, 321 of visible content
+   ========================================================================== */
+.dgz-footer {
+  position: relative;
+  overflow: hidden;
+  padding: clamp(32px, 2.5vw, 48px) var(--pad-x) clamp(28px, 2vw, 40px);
+  background: var(--dgz-ink);
+}
+
+.dgz-footer__bg {
+  position: absolute;
+  inset: 0;
+  background-image: url("../img/home/footer-ingawall.webp");
+  background-size: cover;
+  background-position: center;
+}
+
+.dgz-footer__bg::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(28, 26, 24, 0.82);
+}
+
+.dgz-footer__inner {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: clamp(24px, 3vw, 56px);
+  align-items: start;
+}
+
+.dgz-footer h2 {
+  margin: 0 0 clamp(10px, 1vw, 19px);
+  font-family: var(--dgz-font-display);
+  font-weight: var(--dgz-w-eyebrow);
+  font-size: var(--t-eyebrow);
+  line-height: 1;
+  color: var(--dgz-bone);
+}
+
+/* 72px, and indented 49px further than everything around it, as measured. */
+.dgz-footer__available {
+  margin: 0 0 clamp(20px, 2.2vw, 42px);
+  padding-left: 2.552%;          /* (137.706 - 88.634) / 1920 */
+  max-width: 880px;
+  font-family: var(--dgz-font-display);
+  font-weight: var(--dgz-w-header);
+  font-size: var(--t-header);
+  line-height: 1.14;
+  color: var(--dgz-bone);
+}
+
+.dgz-footer__mail {
+  display: inline-block;
+  font-size: var(--t-body);
+  letter-spacing: .04em;
+  color: var(--dgz-blue);
+  text-decoration: none;
+}
+
+.dgz-footer__mail:hover, .dgz-footer__mail:focus-visible { text-decoration: underline; }
+
+.dgz-footer__aside { display: grid; justify-items: end; gap: clamp(16px, 2vw, 38px); }
+
+.dgz-footer__aside img {
+  width: clamp(170px, 16.41vw, 315px);   /* 315 / 1920 */
+  height: auto;
+}
+
+.dgz-footer__social { display: flex; gap: clamp(8px, .45vw, 9px); }
+
+.dgz-footer__legal {
+  margin: clamp(20px, 2vw, 38px) 0 0;
+  font-size: clamp(.8rem, .94vw, 18px);
+  color: var(--dgz-fg-dim);
+}
+
+/* ==========================================================================
+   Narrow widths. The design has no mobile frame, so this is the minimum that
+   keeps it legible, not a reinterpretation: the two columns become one and
+   the band labels stop colliding.
+   ========================================================================== */
+@media (max-width: 900px) {
+  .dgz-open__inner { flex-direction: column; }
+  .dgz-avatar { align-self: center; width: min(420px, 78vw); }
+  .dgz-btn-primary { margin-left: 0; }
+
+  /* Four bands of 1920 x 335 become unreadable strips on a phone, so each one
+     gets room instead of shrinking its label to nothing. */
+  .dgz-band { aspect-ratio: 16 / 9; }
+
+  /* Two labels 1124px apart cannot both be on screen at phone width, so band
+     4 stacks them. It is the one place the design has no answer to copy. */
+  .dgz-band--illusconcept { flex-direction: column; justify-content: center; gap: .15em; }
+  .dgz-band--illusconcept .dgz-band__label {
+    position: static;
+    transform: none;
+    align-self: flex-start;
+    margin-left: var(--label-illus);
+  }
+  /* 72% of a phone-width band puts this label off the screen, so it keeps its
+     right-hand alignment and takes the same gutter the left labels use. */
+  .dgz-band--gameart { justify-content: flex-end; }
+  .dgz-band--gameart .dgz-band__label {
+    margin-left: 0;
+    margin-right: var(--label-character);
+  }
+
+  .dgz-band__label { font-size: clamp(1.6rem, 9vw, 4rem); }
+  .dgz-band__tab { width: 62%; }
+  .dgz-band__hud { width: 92%; }
+
+  .dgz-footer__inner { grid-template-columns: 1fr; }
+  .dgz-footer__aside { justify-items: start; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dgz-home *, .dgz-home *::before, .dgz-home *::after {
+    animation-duration: .01ms !important;
+    transition-duration: .01ms !important;
+  }
+}
