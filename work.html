@@ -581,6 +581,21 @@ jQuery(function ($) {
 	var grid = $('.awilo_fn_masonry');
 	if (!grid.length || !$().isotope) { return; }
 
+	// Deep link from the home page bands: work.html#pixel opens the gallery
+	// already filtered. Falls back to showing everything on an unknown hash.
+	function dgzApplyHash() {
+		var map = { character: '.f-character', pixel: '.f-pixel', games: '.f-games', illustration: '.f-illustration' };
+		var sel = map[(window.location.hash || '').replace('#', '')];
+		if (!sel) return;
+		var $btn = $('.dgz_filter_btn[data-filter="' + sel + '"]');
+		if (!$btn.length) return;
+		$btn.trigger('click');
+		var $p = $('#portfolio');
+		if ($p.length) $('html, body').animate({ scrollTop: $p.offset().top - 40 }, 300);
+	}
+	$(window).on('load', dgzApplyHash);
+	$(window).on('hashchange', dgzApplyHash);
+
 	$('.dgz_filter').on('click', '.dgz_filter_btn', function () {
 		var $btn = $(this);
 		$('.dgz_filter_btn').removeClass('active').attr('aria-pressed', 'false');

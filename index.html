@@ -29,26 +29,20 @@
     <span class="visually-hidden">Menu</span>
   </button>
 
-  <!-- Menu content per site-pages-phase2.md §1: the four bands in band order,
-       then the two pages that convert, then contact. Items whose page does not
-       exist yet are present but inert, rather than linking nowhere. -->
+  <!-- Every item leads to a real destination. The category pages do not exist
+       yet, so the four categories open the gallery filtered to that category. -->
   <nav class="dgz-menu" id="dgz-menu" hidden>
     <ul>
-      <li><span class="dgz-menu__soon">Character Art</span></li>
-      <li><span class="dgz-menu__soon">Pixel Art</span></li>
-      <li><span class="dgz-menu__soon">Game Art</span></li>
-      <li><span class="dgz-menu__soon">Illustration &amp; Concept Art</span></li>
+      <li><a href="work.html#character">Character Art</a></li>
+      <li><a href="work.html#pixel">Pixel Art</a></li>
+      <li><a href="work.html#games">Game Art</a></li>
+      <li><a href="work.html#illustration">Illustration &amp; Concept Art</a></li>
     </ul>
     <hr class="dgz-menu__rule">
     <ul>
-      <li><span class="dgz-menu__soon">Services</span></li>
-      <li><span class="dgz-menu__soon">About</span></li>
+      <li><a href="work.html">All work</a></li>
+      <li><a href="work.html#about">About</a></li>
       <li><a href="#contact">Contact</a></li>
-    </ul>
-    <hr class="dgz-menu__rule">
-    <ul>
-      <!-- Temporary. Removed once the category pages land. -->
-      <li><a href="work.html">All work &rarr;</a></li>
     </ul>
   </nav>
 </header>
@@ -102,8 +96,8 @@
 
 <!-- =====================================================================
      WorkSection  (Figma 2317:127) -- four bands, five labels.
-     The bands are navigation. They are not links yet: each becomes one on the
-     day its page exists. See site-pages-phase2.md.
+     The bands are navigation and they work: each opens the gallery filtered to
+     its category. They repoint at the category pages once those are built.
      ===================================================================== -->
 <section class="dgz-work" id="work">
 
@@ -116,14 +110,14 @@
     <div class="dgz-band__art" aria-hidden="true" style="
       background-image: url('img/home/band-character-art.webp');"></div>
     <div class="dgz-band__tab dgz-band__tab--left" aria-hidden="true"></div>
-    <span class="dgz-band__label">Character Art</span>
+    <a class="dgz-band__label" href="work.html#character">Character Art</a>
   </div>
 
   <!-- Slot2 -- no tab, label centred -->
   <div class="dgz-band dgz-band--pixel">
     <div class="dgz-band__art" aria-hidden="true" style="
       background-image: url('img/home/band-pixel-art.webp');"></div>
-    <span class="dgz-band__label">Pixel Art</span>
+    <a class="dgz-band__label" href="work.html#pixel">Pixel Art</a>
   </div>
 
   <!-- Slot3 -- right tab, plus the HemoQuest HUD as its own crisp layer -->
@@ -132,15 +126,15 @@
       background-image: url('img/home/band-game-art.webp');"></div>
     <img class="dgz-band__hud" src="img/home/hud-hemoquest.webp" alt="" aria-hidden="true">
     <div class="dgz-band__tab dgz-band__tab--right" aria-hidden="true"></div>
-    <span class="dgz-band__label">Game Art</span>
+    <a class="dgz-band__label" href="work.html#games">Game Art</a>
   </div>
 
   <!-- Slot4 -- Rectangle 14 is a full-width panel, not a tab, which is why
        this band carries two labels on one strip of artwork. -->
   <div class="dgz-band dgz-band--illusconcept">
     <div class="dgz-band__panel" aria-hidden="true"></div>
-    <span class="dgz-band__label">Illustration</span>
-    <span class="dgz-band__label">Concept Art</span>
+    <a class="dgz-band__label" href="work.html#illustration">Illustration</a>
+    <a class="dgz-band__label" href="work.html#illustration">Concept Art</a>
   </div>
 
 </section>

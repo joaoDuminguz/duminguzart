@@ -433,6 +433,22 @@ body.dgz-home img { display: block; max-width: 100%; }
 a.dgz-band__label:hover,
 a.dgz-band__label:focus-visible { color: var(--dgz-blue); }
 
+/* The whole band is the target, not just the words -- a 1920 x 335 strip whose
+   only hit area is its label reads as decoration. Band 4 carries two labels, so
+   there each one claims its own half. */
+a.dgz-band__label::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+}
+
+.dgz-band--illusconcept a.dgz-band__label:first-of-type::after { right: 50%; }
+.dgz-band--illusconcept a.dgz-band__label:last-of-type::after  { left: 50%; }
+
+.dgz-band:hover .dgz-band__art { filter: brightness(1.08); }
+.dgz-band .dgz-band__art { transition: filter .25s ease; }
+
 /* Positioned by measured left offset, except Pixel Art, which is centred. */
 .dgz-band--character .dgz-band__label { margin-left: var(--label-character); }
 .dgz-band--pixel                      { justify-content: center; }
