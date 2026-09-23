@@ -33,63 +33,64 @@
 <main class="stage">
 
   <picture>
-    <source media="(max-aspect-ratio: 1/1)"
-            srcset="img/hero/backdrop-portrait-540.webp 540w,
-                    img/hero/backdrop-portrait-720.webp 720w,
-                    img/hero/backdrop-portrait.webp 1080w"
-            sizes="100vw">
-    <img class="stage__bg"
-         src="img/hero/backdrop.webp"
-         srcset="img/hero/backdrop-640.webp 640w,
-                 img/hero/backdrop-1024.webp 1024w,
-                 img/hero/backdrop-1440.webp 1440w,
-                 img/hero/backdrop.webp 1920w"
-         sizes="100vw"
-         alt="" aria-hidden="true" width="1920" height="1080">
+      <source media="(max-aspect-ratio: 1/1)"
+              srcset="img/hero/backdrop-portrait-540.webp 540w,
+                      img/hero/backdrop-portrait-720.webp 720w,
+                      img/hero/backdrop-portrait.webp 1080w"
+              sizes="100vw">
+      <img class="stage__bg"
+           src="img/hero/backdrop.webp"
+           srcset="img/hero/backdrop-640.webp 640w,
+                   img/hero/backdrop-1024.webp 1024w,
+                   img/hero/backdrop-1440.webp 1440w,
+                   img/hero/backdrop.webp 1920w"
+           sizes="100vw"
+           alt="" aria-hidden="true" width="1920" height="1080">
   </picture>
 
-  <!-- Frame_window. The border is CSS; the two corner details are still missing. -->
+  <p class="stage__roles dgz-caption">
+    Game Art Director | Character Artist | 2D &amp; 3D Game Artist<br>
+    Pixel Art &middot; Concept Art &middot; Illustration
+  </p>
+
+  <div class="stage__pitch">
+    <!-- Two blocks, not one wrapped line. The break after "pixels..." is
+         authored, and the second half is set in sky blue. -->
+    <h1 class="dgz-h2">
+      <span class="stage__pitch-a">Some see the<br>pixels&hellip;</span>
+      <span class="stage__pitch-b">I see the story!</span>
+    </h1>
+    <p class="dgz-sub">Nice to meet you,<br>I&rsquo;m the indie studio<br>ultimate handyman.</p>
+  </div>
+
+  <!-- The neon mark is three stacked groups; that is how the glow is built. -->
+  <div class="stage__logo">
+    <img src="img/hero/logo-a.svg" alt="Duminguz">
+    <img src="img/hero/logo-b.svg" alt="" aria-hidden="true">
+    <img src="img/hero/logo-c.svg" alt="" aria-hidden="true">
+  </div>
+
+  <!-- Frame_window. Rectangle is the CSS border; Detail1 and Details2 are the
+       two drawn vectors, at opposite corners. The whole group rotates 90 on
+       portrait, so it lives in its own box. -->
   <div class="stage__frame" aria-hidden="true"></div>
+  <div class="stage__details" aria-hidden="true">
+    <span class="stage__detail stage__detail--a"></span>
+    <span class="stage__detail stage__detail--b"></span>
+  </div>
 
-  <!-- Three rows, distributed with space-between. The vertical rhythm is a
-       relationship, not a set of coordinates, so it redistributes at any
-       window height instead of leaving a hole or crushing the edges. -->
-  <div class="stage__grid">
+  <!-- The foot belongs to the WINDOW, not to the painting. When the backdrop
+       is cropped at the bottom, anything pinned to the artwork goes off screen
+       with it -- and a contact address that scrolls out of reach is a bug, not
+       a composition. -->
+  <div class="stage__foot">
+    <a class="stage__mail dgz-caption" href="mailto:duminguz.art@gmail.com">duminguz.art@gmail.com</a>
 
-    <p class="stage__roles dgz-caption">
-      Game Art Director | Character Artist | 2D &amp; 3D Game Artist<br>
-      Pixel Art &middot; Concept Art &middot; Illustration
-    </p>
-
-    <div class="stage__body">
-      <div class="stage__pitch">
-        <!-- Two blocks, not one wrapped line. The break after "pixels..." is
-             authored, and the second half is set in sky blue. -->
-        <h1 class="dgz-h2">
-          <span class="stage__pitch-a">Some see the<br>pixels&hellip;</span>
-          <span class="stage__pitch-b">I see the story!</span>
-        </h1>
-        <p class="dgz-sub">Nice to meet you<br>I&rsquo;m the indie studio<br>ultimate handyman.</p>
-      </div>
-
-      <!-- The neon mark is three stacked groups; that is how the glow is built. -->
-      <div class="stage__logo">
-        <img src="img/hero/logo-a.svg" alt="Duminguz">
-        <img src="img/hero/logo-b.svg" alt="" aria-hidden="true">
-        <img src="img/hero/logo-c.svg" alt="" aria-hidden="true">
-      </div>
-    </div>
-
-    <div class="stage__foot">
-      <a class="stage__mail dgz-caption" href="mailto:duminguz.art@gmail.com">duminguz.art@gmail.com</a>
-
-      <nav class="stage__links" aria-label="Profiles">
-        <a class="is-linkedin dgz-button"   href="https://www.linkedin.com/in/duminguz/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="is-artstation dgz-button" href="https://www.artstation.com/joaoduminguz" target="_blank" rel="noopener">ArtStation</a>
-        <a class="is-behance dgz-button"    href="https://www.behance.net/duminguz" target="_blank" rel="noopener">Behance</a>
-      </nav>
-    </div>
-
+    <nav class="stage__links" aria-label="Profiles">
+      <a class="is-linkedin dgz-button"   href="https://www.linkedin.com/in/duminguz/" target="_blank" rel="noopener">LinkedIn</a>
+      <a class="is-artstation dgz-button" href="https://www.artstation.com/joaoduminguz" target="_blank" rel="noopener">ArtStation</a>
+      <a class="is-behance dgz-button"    href="https://www.behance.net/duminguz" target="_blank" rel="noopener">Behance</a>
+    </nav>
   </div>
 
 </main>

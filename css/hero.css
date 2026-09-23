@@ -54,11 +54,31 @@ body.dgz-hero {
   height: 100dvh;                  /* so a mobile browser's chrome cannot clip it */
   overflow: hidden;
   background: var(--dgz-ink);
+
+  /* THE RENDERED HEIGHT OF THE ARTWORK -- the vertical coordinate system.
+
+     João, 2026-09-23: "o texto precisa permanecer na proporcao relativa a
+     altura, com relacao a imagem, ou seja, alinhado ao topo. Se a imagem
+     reduz o tamanho, a distancia entre os objetos reduz proporcionalmente."
+
+     `cover` scales the art by max(vw/1920, vh/1080), so its rendered height
+     is max(56.25vw, 100vh). Because it is anchored to the top, a block at
+     design y sits at `y/1080 * --img-h` from the top of the window. The
+     headline keeps its place across the character's hair, and the gaps
+     between blocks shrink with the ARTWORK rather than with the window.
+
+     VERTICAL ONLY. Horizontal stays on the viewport, because on a window
+     narrower than the art's aspect the art is cropped at the SIDES, and
+     anything anchored to the painting's left or right edge is cropped with
+     it -- which is exactly what happened on the first attempt. */
+  --img-h: max(56.25vw, 100vh);
+
+  /* Side inset, on the window. Floor so it survives a phone, fluid middle,
+     the design's 260 as the ceiling. */
+  --pad: clamp(1.25rem, 9vw, 16.25rem);
 }
 
-/* The art covers from the TOP, centred horizontally, growing with the width.
-   `cover` plus a top origin is exactly that: it fills, and what it loses it
-   loses at the bottom, never off the top of the character's head. */
+/* The art covers from the TOP, centred horizontally, growing with the width. */
 .stage__bg {
   position: absolute;
   inset: 0;
@@ -83,44 +103,62 @@ body.dgz-hero {
   z-index: 2;
 }
 
+/* Detail1 and Details2 -- the two drawn corner vectors, exported 2026-09-23.
+
+   They sit at OPPOSITE corners, which is why the straight runs between them
+   are the Rectangle border rather than drawn: Detail1 is filled and holds the
+   top left, Details2 is outline only and holds the bottom right. Boxes are
+   the SVGs' own, in design pixels, so they ride --dgz-u with the border. */
+.stage__details {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: 3;
+}
+
+.stage__detail {
+  position: absolute;
+  background-repeat: no-repeat;
+  background-size: 100% 100%;
+}
+
+/* Detail1 -- filled, top left */
+.stage__detail--a {
+  left: calc(6 * var(--dgz-u));
+  top: calc(6 * var(--dgz-u));
+  width: calc(165 * var(--dgz-u));
+  height: calc(469 * var(--dgz-u));
+  background-image: url("../img/hero/frame-detail-a.svg");
+}
+
+/* Details2 -- outline only, bottom right */
+.stage__detail--b {
+  right: calc(3 * var(--dgz-u));
+  bottom: calc(50 * var(--dgz-u));
+  width: calc(330 * var(--dgz-u));
+  height: calc(516 * var(--dgz-u));
+  background-image: url("../img/hero/frame-detail-b.svg");
+}
+
 /* --------------------------------------------------------------------------
-   The layout -- three rows, distributed
+   The foot -- pinned to the WINDOW, not to the painting
 
-   `space-between` is the whole vertical system. The roles line sits at the
-   top, the foot at the bottom, and the body takes what is left, so the rhythm
-   redistributes itself at any window height instead of being a set of
-   coordinates that only holds at one.
-
-   The side padding says the same thing three ways: a floor in rem so it never
-   disappears on a phone, a fluid middle so it grows with the window, and the
-   design's 260 as the ceiling so it never exceeds what was drawn.
+   The only part of the composition that is not canvas-relative, and it is a
+   deliberate exception. On a window shorter than 16:9 the backdrop is cropped
+   at the bottom, so anything positioned against the artwork down there leaves
+   the screen with it. An email address and three profile links that scroll out
+   of reach are a bug, not a composition.
    -------------------------------------------------------------------------- */
-.stage__grid {
-  position: relative;
-  z-index: 1;
-  height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  gap: clamp(1.5rem, 3vw, 3.5rem);
-  padding: clamp(1.5rem, 4vw, 5.5rem) clamp(1.25rem, 9vw, 16.25rem);
-}
-
-/* The middle row: pitch left, mark right, centred against each other. */
-.stage__body {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: clamp(1.5rem, 4vw, 6rem);
-  flex: 1;
-  min-height: 0;
-}
-
 .stage__foot {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: clamp(1rem, 3.2vh, 3.25rem);
+  z-index: 1;
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: clamp(.75rem, 1.6vw, 2.25rem);
+  gap: clamp(.75rem, 1.6vh, 2.25rem);
 }
 
 /* --------------------------------------------------------------------------
@@ -138,10 +176,28 @@ body.dgz-hero {
   color: #fff;
 }
 
+/* --------------------------------------------------------------------------
+   Positions
+
+   Vertical: a share of `--img-h`, so it tracks the artwork.
+   Horizontal: the window, via `--pad`.
+   -------------------------------------------------------------------------- */
+
 /* Caption_DGZ, centred at the top. */
 .stage__roles {
+  position: absolute;
+  top: calc(8.7 * var(--img-h) / 100);      /* 94 / 1080 */
+  left: var(--pad);
+  right: var(--pad);
   text-align: center;
   text-wrap: balance;
+}
+
+/* Holds the left edge of the window; its height follows the artwork. */
+.stage__pitch {
+  position: absolute;
+  left: var(--pad);
+  top: calc(23.8 * var(--img-h) / 100);     /* 257 / 1080 */
 }
 
 /* EVERY break in this block is authored with <br>, and nothing here wraps.
@@ -156,6 +212,7 @@ body.dgz-hero {
 .stage__pitch {
   white-space: nowrap;
   text-wrap: nowrap;
+  color: #fff;
 }
 
 /* H2_DGZ. Two blocks with a gap, not one wrapped line: the break after
@@ -180,14 +237,17 @@ body.dgz-hero {
 /* Duminguz_Logo_Colored. Three stacked groups, which is how the neon is built
    -- they are not duplicates. It is drawing, so it rides --dgz-u and is capped
    at the size it was drawn, with a floor so it does not vanish. */
+/* Holds the right edge of the painting, and its size is a share of the
+   painting too, so it keeps its place against the artwork rather than against
+   the window. */
 .stage__logo {
-  position: relative;
-  flex: 0 0 auto;
-  /* The `vh` cap is the one place height is allowed back in, and only because
-     this is a picture. A drawing that does not fit the window should shrink;
-     a paragraph should not, which is why type is on width alone. */
-  width: min(calc(510 * var(--dgz-u)), 46vh);
-  min-width: clamp(7rem, 22vw, 10rem);
+  position: absolute;
+  right: var(--pad);
+  top: calc(21.8 * var(--img-h) / 100);     /* 235 / 1080 */
+  /* Sized off the artwork too, so it keeps its scale against the painting.
+     Capped in `vh` because it is a drawing: one that does not fit the window
+     should shrink, where a paragraph should not. */
+  width: min(calc(47.2 * var(--img-h) / 100), 42vh);
   aspect-ratio: 1;
 }
 
@@ -239,22 +299,22 @@ body.dgz-hero {
 .stage__links a:hover,
 .stage__links a:focus-visible { color: var(--dgz-clay); }
 
-/* The underline is drawn always and revealed by state, so it is not being
-   fetched at the moment the cursor arrives. Sized in `em` so it tracks the
-   word rather than the window.
+/* The underline -- `ButtonLine.svg`, exported 2026-09-23. It is ONE colour
+   with a step in it, not the two-toned rule read off the component-set
+   screenshot: a short high run on the left, a diagonal, then a long low run.
+   `aspect-ratio` holds that 201:8 proportion, so the step keeps its angle at
+   every size instead of flattening.
 
-   ASSET IS PROVISIONAL: this is `linkedin-rule.svg`, exported back when the
-   rule was thought to belong to one button. It belongs to the component, and
-   the set draws it two-toned and stepped, which a single-colour rule cannot
-   be. Needs re-exporting as `button-underline.svg`. */
+   Drawn always and revealed by state, so it is not fetched at the moment the
+   cursor arrives. */
 .stage__links a::after {
   content: "";
   position: absolute;
-  left: -8%;
-  right: -12%;
-  bottom: -.35em;
-  height: .14em;
-  background: url("../img/hero/linkedin-rule.svg") no-repeat center / 100% 100%;
+  left: -6%;
+  right: -10%;
+  top: calc(100% + .18em);
+  aspect-ratio: 201 / 8;
+  background: url("../img/hero/button-line.svg") no-repeat center / 100% 100%;
   opacity: 0;
   transition: opacity .2s ease;
 }
@@ -278,24 +338,55 @@ body.dgz-hero {
    aligned and the mark drops below it rather than sitting beside it.
    -------------------------------------------------------------------------- */
 @media (max-aspect-ratio: 1 / 1) {
-  /* The mobile frame is authored at 1080 wide, so a design pixel is 1/1080 of
-     the viewport rather than 1/1920. */
-  .stage { --dgz-u: clamp(0.34px, 0.0925926vw, 1px); }
-
-  .stage__body {
-    flex-direction: column;
-    align-items: flex-end;
-    justify-content: center;
-    gap: clamp(2rem, 8vw, 5rem);
+  .stage {
+    /* The mobile frame is authored at 1080 wide, so a design pixel is 1/1080
+       of the viewport rather than 1/1920. */
+    --dgz-u: clamp(0.34px, 0.0925926vw, 1px);
+    /* The 9:16 art covers by max(vw/1080, vh/1920). */
+    --img-h: max(177.7778vw, 100vh);
+    --pad: clamp(1rem, 7.4vw, 5rem);
   }
 
-  .stage__pitch { text-align: right; }
+  /* The frame rotates 90 rather than being drawn twice. João: "ao mudar o
+     layout para versao mobile, o frame gira 90 graus." The border is uniform
+     and therefore rotation-invariant, so only the details turn: the box is
+     laid out landscape and spun, which is exact because 1920x1080 rotated is
+     1080x1920 with no remainder. */
+  .stage__details {
+    inset: auto;
+    top: 50%;
+    left: 50%;
+    width: 100vh;
+    height: 100vw;
+    transform: translate(-50%, -50%) rotate(90deg);
+  }
 
-  .stage__logo { width: calc(430 * var(--dgz-u)); }
+  /* The pitch holds the RIGHT edge here, not the left. */
+  .stage__pitch {
+    left: auto;
+    right: var(--pad);
+    top: calc(17.4 * var(--img-h) / 100);
+    text-align: right;
+    /* On a phone the authored lines can be wider than the screen, so the one
+       place the block is allowed to wrap is here -- clipped type would be
+       worse than a re-broken line. */
+    white-space: normal;
+    text-wrap: nowrap;
+  }
+
+  .stage__logo {
+    left: auto;
+    right: var(--pad);
+    top: calc(46.1 * var(--img-h) / 100);
+    width: min(40vw, 30vh);
+  }
 
   /* At the readable floor this line is wider than a phone, so it wraps. A
      legible size that wraps beats a composed line nobody can read. */
-  .stage__roles { white-space: normal; }
+  .stage__roles {
+    top: calc(5.5 * var(--img-h) / 100);
+    white-space: normal;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
