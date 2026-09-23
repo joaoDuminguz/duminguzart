@@ -158,8 +158,8 @@ body.dgz-hero {
 .stage__logo {
   position: absolute;
   right: var(--pad);
-  top: calc(344 * var(--dgz-u));
-  width: calc(250 * var(--dgz-u));
+  top: calc(320 * var(--dgz-u));
+  width: calc(340 * var(--dgz-u));
   aspect-ratio: 1;
 }
 
@@ -173,7 +173,7 @@ body.dgz-hero {
 /* Caption_DGZ, centred, anchored to the BOTTOM */
 .stage__mail {
   position: absolute;
-  bottom: calc(114 * var(--dgz-u));
+  bottom: calc(142 * var(--dgz-u));
   left: 50%;
   transform: translateX(-50%);
   text-decoration: none;
@@ -184,13 +184,22 @@ body.dgz-hero {
 .stage__mail:focus-visible { color: var(--dgz-blue); }
 
 /* --------------------------------------------------------------------------
-   The three buttons -- Button_DGZ, a centred row anchored to the bottom.
-   They were three absolutely-positioned boxes at measured x values; the
-   updated frame spaces them evenly about the centre, so they are a row.
+   The three buttons -- the Empty family of the button component set.
+
+   ALL THREE ARE IDENTICAL. The frame draws LinkedIn differently because it is
+   demonstrating the hover state on one of them, not because that button is
+   special -- confirmed by João 2026-09-23. It had been reproduced as a
+   permanent style, which made one profile link look like the primary of the
+   three for no stated reason.
+
+   The state IS the colour: the set encodes rest, hover and pressed as three
+   colours rather than three shades of one, and the same sequence runs through
+   every button type. Nothing here changes size or position, so the row never
+   shifts under the cursor.
    -------------------------------------------------------------------------- */
 .stage__links {
   position: absolute;
-  bottom: calc(32 * var(--dgz-u));
+  bottom: calc(60 * var(--dgz-u));
   left: 50%;
   transform: translateX(-50%);
   display: flex;
@@ -198,36 +207,50 @@ body.dgz-hero {
   white-space: nowrap;
 }
 
+/* Empty -- at rest */
 .stage__links a {
+  position: relative;
   text-decoration: none;
   color: var(--dgz-blue);
-  transition: color .2s ease, transform .2s ease;
+  transition: color .2s ease;
 }
 
+/* EmptyHover -- the type takes the accent and a vector underlines it.
+   Focus gets the same treatment: on a frameless button the hover state is the
+   only thing that says "this is a link", so a keyboard visitor needs it too. */
 .stage__links a:hover,
-.stage__links a:focus-visible { color: #fff; transform: translateY(-2px); }
+.stage__links a:focus-visible { color: var(--dgz-clay); }
 
-/* LinkedIn is the one in orchid, with a glow and a rule under it.
+/* The underline is drawn always and revealed by state, so it is not being
+   fetched at the moment the cursor arrives.
 
-   OPEN: the button component set says an underline belongs to EmptyHover, so
-   this may be a hover state reproduced as a permanent style. See
-   DuminguzHUB/portfolio/duminguz-art/ui/components.md §8.6 -- one line either
-   way, once it is decided. */
-.stage__links .is-linkedin {
-  position: relative;
-  color: var(--dgz-orchid);
-  text-shadow: 0 0 2.25px rgba(115, 202, 231, .42);
-}
-
-.stage__links .is-linkedin::after {
+   ASSET IS PROVISIONAL: this is `linkedin-rule.svg`, exported back when the
+   rule was thought to belong to one button. It belongs to the component, and
+   the set draws it two-toned and stepped, which a single-colour rule cannot
+   be. Needs re-exporting as `button-underline.svg`. */
+.stage__links a::after {
   content: "";
   position: absolute;
   left: -8%;
   right: -12%;
-  bottom: calc(-8 * var(--dgz-u));
-  height: calc(4 * var(--dgz-u));
+  bottom: calc(-12 * var(--dgz-u));
+  height: calc(5 * var(--dgz-u));
   background: url("../img/hero/linkedin-rule.svg") no-repeat center / 100% 100%;
+  opacity: 0;
+  transition: opacity .2s ease;
 }
+
+.stage__links a:hover::after,
+.stage__links a:focus-visible::after { opacity: 1; }
+
+/* EmptyPressed -- while the click is HELD, and nothing else. `:active` is the
+   whole implementation: it cannot persist after release, which is exactly what
+   a toggled class would get wrong.
+
+   COLOUR IS PROVISIONAL: the `response` role, orchid. The set draws
+   EmptyPressed in a magenta visibly hotter than orchid and its hex has not
+   been read yet -- one line when it is. */
+.stage__links a:active { color: var(--dgz-orchid); }
 
 /* --------------------------------------------------------------------------
    Portrait -- DGZ_homePageMOBILE, Figma 2350:481.
@@ -262,5 +285,7 @@ body.dgz-hero {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .stage__links a, .stage__mail { transition: none; }
+  .stage__links a,
+  .stage__links a::after,
+  .stage__mail { transition: none; }
 }
