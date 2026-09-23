@@ -27,14 +27,21 @@
      ===================================================================== -->
 <main class="stage">
 
-  <img class="stage__bg"
-       src="img/hero/backdrop.webp"
-       srcset="img/hero/backdrop-640.webp 640w,
-               img/hero/backdrop-1024.webp 1024w,
-               img/hero/backdrop-1440.webp 1440w,
-               img/hero/backdrop.webp 1920w"
-       sizes="100vw"
-       alt="" aria-hidden="true" width="1920" height="1080">
+  <picture>
+    <source media="(max-aspect-ratio: 1/1)"
+            srcset="img/hero/backdrop-portrait-540.webp 540w,
+                    img/hero/backdrop-portrait-720.webp 720w,
+                    img/hero/backdrop-portrait.webp 1080w"
+            sizes="100vw">
+    <img class="stage__bg"
+         src="img/hero/backdrop.webp"
+         srcset="img/hero/backdrop-640.webp 640w,
+                 img/hero/backdrop-1024.webp 1024w,
+                 img/hero/backdrop-1440.webp 1440w,
+                 img/hero/backdrop.webp 1920w"
+         sizes="100vw"
+         alt="" aria-hidden="true" width="1920" height="1080">
+  </picture>
 
   <img class="stage__frame" src="img/hero/frame-window.svg" alt="" aria-hidden="true">
 
