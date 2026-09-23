@@ -1,20 +1,27 @@
 /* ==========================================================================
    Duminguz home -- DGZ_homePage2
 
-   Built from Figma kTQ4xLTJJ16sMcs4JTvRRg, node 2348:246, measured 2026-09-23.
-   The design is one 1920 x 1080 screen, so the page is a 16:9 stage that scales
-   whole rather than a layout that reflows. Every position below is the measured
-   pixel divided by 1920 or 1080, and every type size is in `cqw` -- 1cqw is one
-   percent of the stage width -- so the design holds its proportions at any size.
+   Figma kTQ4xLTJJ16sMcs4JTvRRg, node 2348:246. Authored at 1920 x 1080.
+
+   NOT a fixed 16:9 stage any more. Rebuilt 2026-09-23 to João's rule:
+
+     "o background deve ajustar de acordo com o tamanho da tela de forma
+      responsiva. assim como o texto deve se movimentar acompanhando o
+      alinhamento a esquerda do texto h1 e h2, da logo a direita e o conteudo
+      centralizado segue centralizado. A foto deve aumentar de acordo com a
+      largura, mas sempre alinhada ao topo e centralizada."
+
+   So the frame fills the viewport and the composition ANCHORS rather than
+   scales: the pitch holds the left edge, the mark holds the right, the roles
+   line, the mail and the buttons stay centred, and the art covers from the
+   top. Only the type and the insets scale, on the tighter of the two axes.
 
    THE LAYOUT IS THE ART DIRECTOR'S. Reproduce it; do not "improve" it here.
    ========================================================================== */
 
 :root {
-  /* Frame_window is drawn in orchid, a brandbook colour. The #EB00DC that stood
-     here until 2026-09-23 came from a stale SVG export and was never in the file;
-     the Inspect block states `border: 20px solid #A24795`. Kept as its own
-     property because the two corner details share it. */
+  /* Frame_window is drawn in orchid, a brandbook colour. Confirmed from the
+     file 2026-09-23: `border: 20px solid #A24795`. */
   --hero-frame: var(--dgz-orchid);
 }
 
@@ -24,8 +31,6 @@ html, body { height: 100%; }
 
 body.dgz-hero {
   margin: 0;
-  display: grid;
-  place-items: center;
   background: var(--dgz-ink);
   color: #fff;
   font-family: var(--dgz-font-body);
@@ -33,28 +38,39 @@ body.dgz-hero {
 }
 
 /* --------------------------------------------------------------------------
-   The stage
+   The stage -- the viewport
    -------------------------------------------------------------------------- */
 .stage {
   position: relative;
-  container-type: inline-size;
-  /* One design pixel, as a fraction of the stage. The type scale in brand.css
-     is authored at 1920 and multiplies by this, so it rides the stage. */
-  --dgz-u: 0.0520833cqw;           /* 100 / 1920 */
-  width: min(100vw, 177.7778vh);   /* 16:9, whichever axis runs out first */
-  aspect-ratio: 16 / 9;
+  width: 100vw;
+  height: 100vh;
+  height: 100dvh;                  /* so a mobile browser's chrome cannot clip it */
   overflow: hidden;
   background: var(--dgz-ink);
+
+  /* One design pixel.
+
+     The design is 1920 x 1080, so `min()` takes whichever axis is tighter and
+     the composition never outgrows the screen on either one. The floor stops
+     the type vanishing on a small window; there is no ceiling, because a
+     larger screen should get larger type. */
+  --dgz-u: max(0.5px, min(0.0520833vw, 0.0925926vh));
+
+  /* Content inset from the frame. Read off the updated frame, where the pitch
+     and the mark sit symmetrically about 170 from their own edges. */
+  --pad: calc(170 * var(--dgz-u));
 }
 
-/* image 6: 1932.53 x 1086.82 at x=-6.27, cover, 80% opacity over the ink */
+/* The art covers from the TOP, centred horizontally, growing with the width.
+   `cover` plus a top origin is exactly that: it fills, and what it loses it
+   loses at the bottom, never off the top of the character's head. */
 .stage__bg {
   position: absolute;
-  top: 0;
-  left: -0.3264%;                  /* -6.265 / 1920 */
-  width: 100.6526%;                /* 1932.531 / 1920 */
-  height: 100.6316%;               /* 1086.821 / 1080 */
+  inset: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
+  object-position: top center;
   opacity: .8;
   pointer-events: none;
 }
@@ -67,89 +83,83 @@ body.dgz-hero {
 .stage__frame {
   position: absolute;
   inset: 0;
-  border: 1.0417cqw solid var(--hero-frame);   /* 20 / 1920 */
+  border: calc(20 * var(--dgz-u)) solid var(--hero-frame);
   pointer-events: none;
 }
 
 /* --------------------------------------------------------------------------
    Type
+
+   Every block now takes a NAMED STYLE from the scale in brand.css. Nothing
+   here sets a size, a weight or a tracking -- only position and colour. That
+   is the point of the scale: a change of type is a change in one place.
    -------------------------------------------------------------------------- */
+
 .stage__roles,
 .stage__pitch h1,
 .stage__pitch p,
 .stage__mail {
-  font-family: var(--dgz-font-display);
   margin: 0;
   color: #fff;
 }
 
-/* 48px DemiBold, centred, y=113, tracking 5.76 */
+/* Caption_DGZ, centred at the top */
 .stage__roles {
   position: absolute;
-  top: 10.463%;
+  top: calc(94 * var(--dgz-u));
   left: 50%;
-  transform: translate(-50%, -50%);
+  transform: translateX(-50%);
   width: 100%;
-  font-weight: 600;
-  font-size: 2.5cqw;               /* 48 / 1920 */
-  line-height: 1.15;
-  letter-spacing: .12em;           /* 5.76 / 48 */
   text-align: center;
   white-space: nowrap;
 }
 
-/* Group 2 -- x=216.5, y=226.87, 605.34 x 448.13. The file groups the headline
-   and the line under it, so they are one block here too and the text flows
-   inside it. Anchoring each at its own fixed y makes them collide the moment
-   the display face falls back to a wider substitute. */
-/* COMPENSATION, not a design value. The file's box is 605.34 wide (31.528%),
-   measured when the display face was TT Carvist. Chakra Petch sets the same
-   strings about 1.5x wider -- measured in the browser at the design scale,
-   "ultimate handyman." is 705.1 against a 467.6 box -- so at 31.528% the block
-   overflowed the bottom of the stage and the subline broke mid-phrase.
+/* The pitch holds the LEFT edge -- it moves with it rather than scaling with
+   the frame. Headline and subline flow as one block, because anchoring each
+   at its own fixed y makes them collide the moment a face substitutes. */
+/* EVERY break in this block is authored with <br>, and nothing here wraps.
 
-   Widening rather than shrinking the type, because the type size is the
-   compositional choice and the space is empty: the block starts at x=216.5 and
-   the logo at x=1199.5, so 720 fits with 263 to spare. The headline then breaks
-   in three lines, which is how the mobile frame breaks it.
-
-   REPLACE THIS once Chakra Petch is set in the Figma file and the box is
-   re-measured. See DuminguzHUB/portfolio/duminguz-art/ui/components.md */
+   That is deliberate and it is the third time the lesson has been paid for.
+   Relying on a box width to produce a break means the break belongs to the
+   font metrics, not to the design: Chakra Petch re-broke it once by being
+   1.5x wider than TT Carvist, and `text-wrap: balance` -- inherited from the
+   h1 rule in brand.css -- re-broke it again by splitting the lines evenly
+   instead of greedily. With `nowrap`, a face that stops fitting overflows
+   visibly instead of quietly recomposing the headline. */
 .stage__pitch {
   position: absolute;
-  left: 11.276%;                   /* 216.5 / 1920 */
-  top: 21.007%;                    /* 226.87 / 1080 */
-  width: 37.5%;                    /* 720 / 1920 -- was 31.528% */
-}
-
-/* 93.6px DemiBold, tracking 1.872 */
-.stage__pitch h1 {
-  font-weight: 600;
-  font-size: 4.875cqw;             /* 93.6 / 1920 */
-  line-height: 1.12;
-  letter-spacing: .02em;           /* 1.872 / 93.6 */
-}
-
-/* 62.4px Medium, tracking 7.488. The gap measures 21px.
-   The three lines are authored with <br>, so `nowrap` states that: a face that
-   no longer fits will overflow visibly instead of quietly breaking a phrase in
-   half, which is what happened here. The file's 77.246% width is gone with it. */
-.stage__pitch p {
-  margin-top: 1.094cqw;            /* 21 / 1920 */
+  left: var(--pad);
+  top: calc(257 * var(--dgz-u));
   white-space: nowrap;
-  font-weight: 500;
-  font-size: 3.25cqw;              /* 62.4 / 1920 */
-  line-height: 1.24;
-  letter-spacing: .12em;           /* 7.488 / 62.4 */
+  text-wrap: nowrap;
 }
 
-/* Duminguz_Logo_Colored, 504 square at x=1199.5, y=210. Three stacked groups,
-   which is how the neon is built -- they are not duplicates. */
+/* H2_DGZ. Two blocks with a gap, not one wrapped line: the break after
+   "pixels..." is authored, and the second half is the one set in sky blue. */
+.stage__pitch h1 > span {
+  display: block;
+}
+
+.stage__pitch-b {
+  margin-top: calc(54 * var(--dgz-u));
+  color: var(--dgz-blue);
+}
+
+/* Sub_DGZ. The three lines are authored with <br>, so `nowrap` states that: a
+   face that stops fitting will overflow visibly instead of quietly breaking a
+   phrase in half, which is what happened when Chakra Petch arrived. */
+.stage__pitch p {
+  margin-top: calc(54 * var(--dgz-u));
+  white-space: nowrap;
+}
+
+/* Duminguz_Logo_Colored holds the RIGHT edge. Three stacked groups, which is
+   how the neon is built -- they are not duplicates. */
 .stage__logo {
   position: absolute;
-  left: 62.474%;
-  top: 19.444%;
-  width: 26.25%;
+  right: var(--pad);
+  top: calc(344 * var(--dgz-u));
+  width: calc(250 * var(--dgz-u));
   aspect-ratio: 1;
 }
 
@@ -160,15 +170,12 @@ body.dgz-hero {
   height: 100%;
 }
 
-/* 48px Medium, centred, y=892.1, tracking 5.76 */
+/* Caption_DGZ, centred, anchored to the BOTTOM */
 .stage__mail {
   position: absolute;
-  top: 82.602%;
+  bottom: calc(114 * var(--dgz-u));
   left: 50%;
-  transform: translate(-50%, -50%);
-  font-weight: 500;
-  font-size: 2.5cqw;
-  letter-spacing: .12em;
+  transform: translateX(-50%);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -177,20 +184,21 @@ body.dgz-hero {
 .stage__mail:focus-visible { color: var(--dgz-blue); }
 
 /* --------------------------------------------------------------------------
-   The three buttons -- 276.75 x 90, Space Grotesk Medium 31.5, uppercase.
-   Their y values differ by a pixel or two in the file; reproduced as measured.
+   The three buttons -- Button_DGZ, a centred row anchored to the bottom.
+   They were three absolutely-positioned boxes at measured x values; the
+   updated frame spaces them evenly about the centre, so they are a row.
    -------------------------------------------------------------------------- */
-.stage__links a {
+.stage__links {
   position: absolute;
-  display: grid;
-  place-items: center;
-  width: 14.414%;                  /* 276.75 / 1920 */
-  height: 8.333%;                  /*  90    / 1080 */
-  font-family: var(--dgz-font-body);
-  font-weight: 500;
-  font-size: 1.6406cqw;            /* 31.5 / 1920 */
-  letter-spacing: .04em;           /* 1.26 / 31.5 */
-  text-transform: uppercase;
+  bottom: calc(32 * var(--dgz-u));
+  left: 50%;
+  transform: translateX(-50%);
+  display: flex;
+  gap: calc(145 * var(--dgz-u));
+  white-space: nowrap;
+}
+
+.stage__links a {
   text-decoration: none;
   color: var(--dgz-blue);
   transition: color .2s ease, transform .2s ease;
@@ -199,12 +207,14 @@ body.dgz-hero {
 .stage__links a:hover,
 .stage__links a:focus-visible { color: #fff; transform: translateY(-2px); }
 
-.stage__links .is-linkedin  { left: 26.419%; top: 86.643%; }
-.stage__links .is-artstation{ left: 42.793%; top: 86.711%; }
-.stage__links .is-behance   { left: 59.167%; top: 86.574%; }
+/* LinkedIn is the one in orchid, with a glow and a rule under it.
 
-/* LinkedIn is the one in orchid, with a glow and a rule under it. */
+   OPEN: the button component set says an underline belongs to EmptyHover, so
+   this may be a hover state reproduced as a permanent style. See
+   DuminguzHUB/portfolio/duminguz-art/ui/components.md §8.6 -- one line either
+   way, once it is decided. */
 .stage__links .is-linkedin {
+  position: relative;
   color: var(--dgz-orchid);
   text-shadow: 0 0 2.25px rgba(115, 202, 231, .42);
 }
@@ -212,85 +222,43 @@ body.dgz-hero {
 .stage__links .is-linkedin::after {
   content: "";
   position: absolute;
-  left: 9.42%;
-  right: 18.02%;
-  top: 66.69%;
-  height: 8.5%;
+  left: -8%;
+  right: -12%;
+  bottom: calc(-8 * var(--dgz-u));
+  height: calc(4 * var(--dgz-u));
   background: url("../img/hero/linkedin-rule.svg") no-repeat center / 100% 100%;
 }
 
 /* --------------------------------------------------------------------------
    Portrait -- DGZ_homePageMOBILE, Figma 2350:481.
 
-   His own 9:16 frame, not a reflow of the desktop one. The positions below are
-   measured off the exported frame rather than the file, because the Figma call
-   budget ran out; they are refined against the node when it can be read.
+   His own 9:16 frame, not a reflow of the desktop one. The positions below
+   are still measured off a screenshot rather than the file, and are the last
+   part of this page not read from the design.
    -------------------------------------------------------------------------- */
 @media (max-aspect-ratio: 1 / 1) {
   .stage {
-    width: min(100vw, 56.25vh);    /* 9:16 */
-    aspect-ratio: 9 / 16;
-    /* The mobile frame is authored at 1080 wide and states its own sizes in
-       its own pixels -- MobileCaption_DGZ is 26px there, not 26 scaled down --
-       so the design unit is a fraction of 1080, not of 1920. */
-    --dgz-u: 0.0925926cqw;         /* 100 / 1080 */
+    /* The mobile frame is authored at 1080 wide and states its sizes in its
+       own pixels -- MobileCaption_DGZ is 26 there, not 26 scaled down -- so
+       the design unit divides by 1080 and 1920, not the other way round. */
+    --dgz-u: max(0.5px, min(0.0925926vw, 0.0520833vh));
+    --pad: calc(80 * var(--dgz-u));
   }
 
-  /* The same 20px border, now against a 1080-wide frame. The border is
-     rotation-invariant, so it needs no transform -- only the two corner details
-     rotate, and they are not built yet. */
-  .stage__frame { border-width: 1.8519cqw; }   /* 20 / 1080 */
-
-  .stage__bg { left: 0; width: 100%; height: 100%; opacity: 1; }
-
-  /* Roles, centred at the top */
-  .stage__roles {
-    top: 9.1%;
-    font-size: 3.24cqw;
-    letter-spacing: .1em;
-  }
-
-  /* The headline block sits RIGHT aligned, unlike the desktop frame */
+  /* The pitch block sits RIGHT aligned, unlike the landscape frame */
   .stage__pitch {
     left: auto;
-    right: 8%;
-    top: 17.4%;
-    width: 80%;
+    right: var(--pad);
     text-align: right;
   }
 
-  .stage__pitch h1 { font-size: 8.07cqw; line-height: 1.22; }
-
-  .stage__pitch p {
-    margin-top: 5cqw;
-    font-size: 5.04cqw;
-    line-height: 1.32;
-    letter-spacing: .1em;
-  }
-
   /* The mark drops to the middle right, over the cloak */
-  .stage__logo { left: 52.3%; top: 46.1%; width: 40%; }
-
-  .stage__mail { top: 88.9%; font-size: 2.9cqw; }
-
-  .stage__links a {
-    top: 93.6%;
-    width: auto;
-    height: auto;
-    transform: translate(-50%, -50%);
-    font-size: 2.65cqw;
+  .stage__logo {
+    top: calc(880 * var(--dgz-u));
+    width: calc(430 * var(--dgz-u));
   }
 
-  .stage__links .is-linkedin   { left: 22.6%; top: 93.6%; }
-  .stage__links .is-artstation { left: 49.9%; top: 93.6%; }
-  .stage__links .is-behance    { left: 77.2%; top: 93.6%; }
-
-  .stage__links .is-linkedin::after {
-    left: -14%;
-    right: -6%;
-    top: 112%;
-    height: 10%;
-  }
+  .stage__links { gap: calc(90 * var(--dgz-u)); }
 }
 
 @media (prefers-reduced-motion: reduce) {

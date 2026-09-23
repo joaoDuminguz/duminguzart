@@ -23,7 +23,12 @@
 <body class="dgz-hero">
 
 <!-- =====================================================================
-     DGZ_homePage2 -- Figma 2348:246, one 1920 x 1080 screen.
+     DGZ_homePage2, authored at 1920 x 1080.
+
+     The page is NOT a 16:9 stage that scales whole any more. It fills the
+     viewport and the composition anchors: the pitch holds the left edge, the
+     mark holds the right, everything else stays centred, and the art covers
+     from the top. Type comes from the named scale in brand.css.
      ===================================================================== -->
 <main class="stage">
 
@@ -46,17 +51,19 @@
   <!-- Frame_window. The border is CSS; the two corner details are still missing. -->
   <div class="stage__frame" aria-hidden="true"></div>
 
-  <p class="stage__roles">
+  <p class="stage__roles dgz-caption">
     Game Art Director | Character Artist | 2D &amp; 3D Game Artist<br>
     Pixel Art &middot; Concept Art &middot; Illustration
   </p>
 
   <div class="stage__pitch">
-    <!-- The break after "pixels..." is authored, not a wrap. It was relying on
-         the box width until 2026-09-23, which stopped working the moment the
-         display face changed. -->
-    <h1>Some see the pixels&hellip;<br>I see the story!</h1>
-    <p>Nice to meet you<br>I&rsquo;m the indie studio<br>ultimate handyman.</p>
+    <!-- Two blocks, not one wrapped line. The break after "pixels..." is
+         authored, and the second half is set in sky blue. -->
+    <h1 class="dgz-h2">
+      <span class="stage__pitch-a">Some see the<br>pixels&hellip;</span>
+      <span class="stage__pitch-b">I see the story!</span>
+    </h1>
+    <p class="dgz-sub">Nice to meet you<br>I&rsquo;m the indie studio<br>ultimate handyman.</p>
   </div>
 
   <!-- The neon mark is three stacked groups; that is how the glow is built. -->
@@ -66,12 +73,12 @@
     <img src="img/hero/logo-c.svg" alt="" aria-hidden="true">
   </div>
 
-  <a class="stage__mail" href="mailto:duminguz.art@gmail.com">duminguz.art@gmail.com</a>
+  <a class="stage__mail dgz-caption" href="mailto:duminguz.art@gmail.com">duminguz.art@gmail.com</a>
 
   <nav class="stage__links" aria-label="Profiles">
-    <a class="is-linkedin"   href="https://www.linkedin.com/in/duminguz/" target="_blank" rel="noopener">LinkedIn</a>
-    <a class="is-artstation" href="https://www.artstation.com/joaoduminguz" target="_blank" rel="noopener">ArtStation</a>
-    <a class="is-behance"    href="https://www.behance.net/joaoduminguz" target="_blank" rel="noopener">Behance</a>
+    <a class="is-linkedin dgz-button"   href="https://www.linkedin.com/in/duminguz/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="is-artstation dgz-button" href="https://www.artstation.com/joaoduminguz" target="_blank" rel="noopener">ArtStation</a>
+    <a class="is-behance dgz-button"    href="https://www.behance.net/joaoduminguz" target="_blank" rel="noopener">Behance</a>
   </nav>
 
 </main>
