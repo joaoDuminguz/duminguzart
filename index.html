@@ -3,202 +3,67 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>João Duminguz — Game Artist</title>
-<meta name="description" content="Game artist: 2D and pixel game art, stylized 3D characters and props, concept art and the visual systems that keep a team consistent. Available for contract and freelance work.">
+<title>João Duminguz — Game Art Director</title>
+<meta name="description" content="Game Art Director, Character Artist, 2D and 3D game artist. Pixel art, concept art and illustration. The indie studio ultimate handyman.">
+
+<meta property="og:title" content="João Duminguz — Game Art Director">
+<meta property="og:description" content="Some see the pixels… I see the story.">
+<meta property="og:image" content="https://duminguz.art/img/hero/backdrop.webp">
+<meta property="og:url" content="https://duminguz.art/">
+<meta name="twitter:card" content="summary_large_image">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Big+Shoulders+Display:wght@500;600&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" href="css/brand.css">
-<link rel="stylesheet" href="css/home.css">
+<link rel="stylesheet" href="css/hero.css">
 </head>
 
-<body class="dgz-home">
+<body class="dgz-hero">
 
 <!-- =====================================================================
-     Header  (Figma 2304:3895)
+     DGZ_homePage2 -- Figma 2348:246, one 1920 x 1080 screen.
      ===================================================================== -->
-<header class="dgz-header">
-  <a class="dgz-header__logo" href="index.html" aria-label="Duminguz, home">
-    <img src="img/logo-duminguz.svg" alt="Duminguz">
-  </a>
+<main class="stage">
 
-  <button class="dgz-menu-btn" id="dgz-menu-btn" aria-expanded="false" aria-controls="dgz-menu">
-    <span></span><span></span><span></span>
-    <span class="visually-hidden">Menu</span>
-  </button>
+  <img class="stage__bg"
+       src="img/hero/backdrop.webp"
+       srcset="img/hero/backdrop-640.webp 640w,
+               img/hero/backdrop-1024.webp 1024w,
+               img/hero/backdrop-1440.webp 1440w,
+               img/hero/backdrop.webp 1920w"
+       sizes="100vw"
+       alt="" aria-hidden="true" width="1920" height="1080">
 
-  <!-- Every item leads to a real destination. The category pages do not exist
-       yet, so the four categories open the gallery filtered to that category. -->
-  <nav class="dgz-menu" id="dgz-menu" hidden>
-    <ul>
-      <li><a href="work.html#character">Character Art</a></li>
-      <li><a href="work.html#pixel">Pixel Art</a></li>
-      <li><a href="work.html#games">Game Art</a></li>
-      <li><a href="work.html#illustration">Illustration &amp; Concept Art</a></li>
-    </ul>
-    <hr class="dgz-menu__rule">
-    <ul>
-      <li><a href="work.html">All work</a></li>
-      <li><a href="work.html#about">About</a></li>
-      <li><a href="#contact">Contact</a></li>
-    </ul>
+  <img class="stage__frame" src="img/hero/frame-window.svg" alt="" aria-hidden="true">
+
+  <p class="stage__roles">
+    Game Art Director | Character Artist | 2D &amp; 3D Game Artist<br>
+    Pixel Art &middot; Concept Art &middot; Illustration
+  </p>
+
+  <div class="stage__pitch">
+    <h1>Some see the pixels&hellip; I see the story!</h1>
+    <p>Nice to meet you<br>I&rsquo;m the indie studio<br>ultimate handyman.</p>
+  </div>
+
+  <!-- The neon mark is three stacked groups; that is how the glow is built. -->
+  <div class="stage__logo">
+    <img src="img/hero/logo-a.svg" alt="Duminguz">
+    <img src="img/hero/logo-b.svg" alt="" aria-hidden="true">
+    <img src="img/hero/logo-c.svg" alt="" aria-hidden="true">
+  </div>
+
+  <a class="stage__mail" href="mailto:duminguz.art@gmail.com">duminguz.art@gmail.com</a>
+
+  <nav class="stage__links" aria-label="Profiles">
+    <a class="is-linkedin"   href="https://www.linkedin.com/in/duminguz/" target="_blank" rel="noopener">LinkedIn</a>
+    <a class="is-artstation" href="https://www.artstation.com/joaoduminguz" target="_blank" rel="noopener">ArtStation</a>
+    <a class="is-behance"    href="https://www.behance.net/joaoduminguz" target="_blank" rel="noopener">Behance</a>
   </nav>
-</header>
 
-<!-- =====================================================================
-     OpenSection  (Figma 2317:126)
-     ===================================================================== -->
-<section class="dgz-open">
-  <div class="dgz-open__bg" aria-hidden="true"></div>
-
-  <div class="dgz-open__inner">
-    <div class="dgz-open__text">
-      <p class="dgz-eyebrow">Hello!</p>
-
-      <h1>I&rsquo;m Jo&atilde;o Duminguz, a game artist: 2D, pixel art and stylized 3D.</h1>
-
-      <div class="dgz-lede">
-        <p>Fourteen years making things look like something: 2D and pixel game art,
-           stylized 3D characters and props, concept art and the visual systems that
-           keep a team consistent. I led the 3D art team at Sortium on a stylized
-           cyberpunk Roblox title, and before that art directed independent games,
-           a feature film and comics.</p>
-        <p>My own aesthetic, Parahyba Surrealism, puts the culture of northeastern
-           Brazil next to science fiction. I work remotely, from Jo&atilde;o Pessoa,
-           with studios anywhere.</p>
-      </div>
-
-      <div class="dgz-open__actions">
-        <a class="dgz-btn-social" href="https://www.artstation.com/joaoduminguz" target="_blank" rel="noopener">ArtStation</a>
-        <a class="dgz-btn-social" href="https://www.linkedin.com/in/duminguz/" target="_blank" rel="noopener">LinkedIn</a>
-        <a class="dgz-btn-social" href="https://www.behance.net/joaoduminguz" target="_blank" rel="noopener">Behance</a>
-
-        <a class="dgz-btn-primary" href="work.html">
-          See the work
-          <svg viewBox="0 0 22 13" aria-hidden="true"><path d="M0 5.2h16.4L12.1.9 13 0l5.9 5.9-5.9 5.9-.9-.9 4.3-4.3H0z"/></svg>
-        </a>
-      </div>
-    </div>
-
-    <figure class="dgz-avatar">
-      <img src="img/home/open-avatar.webp"
-           srcset="img/home/open-avatar-420.webp 420w, img/home/open-avatar.webp 620w"
-           sizes="(max-width: 900px) 78vw, 34.68vw"
-           alt="Portrait of Jo&atilde;o Duminguz" width="620" height="620">
-      <span class="dgz-avatar__frame" aria-hidden="true"><span></span><span></span></span>
-    </figure>
-  </div>
-
-  <hr class="dgz-divider">
-</section>
-
-<!-- =====================================================================
-     WorkSection  (Figma 2317:127) -- four bands, five labels.
-     The bands are navigation and they work: each opens the gallery filtered to
-     its category. They repoint at the category pages once those are built.
-     ===================================================================== -->
-<section class="dgz-work" id="work">
-
-  <!-- The Figma still carries "Hook title for the gallery" as placeholder copy.
-       This line is a draft standing in for it, for João to replace. -->
-  <h2 class="dgz-work__hook">Four disciplines, one pipeline.</h2>
-
-  <!-- Slot1 -- left tab -->
-  <div class="dgz-band dgz-band--character">
-    <div class="dgz-band__art" aria-hidden="true" style="
-      background-image: url('img/home/band-character-art.webp');"></div>
-    <div class="dgz-band__tab dgz-band__tab--left" aria-hidden="true"></div>
-    <a class="dgz-band__label" href="work.html#character">Character Art</a>
-  </div>
-
-  <!-- Slot2 -- no tab, label centred -->
-  <div class="dgz-band dgz-band--pixel">
-    <div class="dgz-band__art" aria-hidden="true" style="
-      background-image: url('img/home/band-pixel-art.webp');"></div>
-    <a class="dgz-band__label" href="work.html#pixel">Pixel Art</a>
-  </div>
-
-  <!-- Slot3 -- right tab, plus the HemoQuest HUD as its own crisp layer -->
-  <div class="dgz-band dgz-band--gameart">
-    <div class="dgz-band__art" aria-hidden="true" style="
-      background-image: url('img/home/band-game-art.webp');"></div>
-    <img class="dgz-band__hud" src="img/home/hud-hemoquest.webp" alt="" aria-hidden="true">
-    <div class="dgz-band__tab dgz-band__tab--right" aria-hidden="true"></div>
-    <a class="dgz-band__label" href="work.html#games">Game Art</a>
-  </div>
-
-  <!-- Slot4 -- Rectangle 14 is a full-width panel, not a tab, which is why
-       this band carries two labels on one strip of artwork. -->
-  <div class="dgz-band dgz-band--illusconcept">
-    <div class="dgz-band__panel" aria-hidden="true"></div>
-    <a class="dgz-band__label" href="work.html#illustration">Illustration</a>
-    <a class="dgz-band__label" href="work.html#illustration">Concept Art</a>
-  </div>
-
-</section>
-
-<!-- =====================================================================
-     Rodape  (Figma 2317:125)
-     ===================================================================== -->
-<footer class="dgz-footer" id="contact">
-  <div class="dgz-footer__bg" aria-hidden="true"></div>
-
-  <div class="dgz-footer__inner">
-    <div>
-      <h2>Contact</h2>
-      <p class="dgz-footer__available">Available for contract and freelance work</p>
-      <a class="dgz-footer__mail" href="mailto:duminguz.art@gmail.com">Duminguz.art@gmail.com</a>
-    </div>
-
-    <div class="dgz-footer__aside">
-      <img src="img/logo-duminguz.svg" alt="Duminguz" width="315" height="133">
-      <div class="dgz-footer__social">
-        <a class="dgz-btn-social" href="https://www.artstation.com/joaoduminguz" target="_blank" rel="noopener">ArtStation</a>
-        <a class="dgz-btn-social" href="https://www.linkedin.com/in/duminguz/" target="_blank" rel="noopener">LinkedIn</a>
-      </div>
-    </div>
-  </div>
-
-  <p class="dgz-footer__legal">&copy; 2026 Jo&atilde;o Duminguz</p>
-</footer>
-
-<script>
-(function () {
-  var btn  = document.getElementById('dgz-menu-btn');
-  var menu = document.getElementById('dgz-menu');
-  if (!btn || !menu) return;
-
-  function setOpen(open) {
-    btn.setAttribute('aria-expanded', String(open));
-    menu.hidden = !open;
-  }
-
-  btn.addEventListener('click', function () {
-    setOpen(btn.getAttribute('aria-expanded') !== 'true');
-  });
-
-  // Escape closes it, and focus goes back to the control that opened it.
-  document.addEventListener('keydown', function (e) {
-    if (e.key === 'Escape' && btn.getAttribute('aria-expanded') === 'true') {
-      setOpen(false);
-      btn.focus();
-    }
-  });
-
-  // A click outside closes it.
-  document.addEventListener('click', function (e) {
-    if (btn.getAttribute('aria-expanded') !== 'true') return;
-    if (!menu.contains(e.target) && !btn.contains(e.target)) setOpen(false);
-  });
-
-  // Following the contact anchor should not leave the panel open behind it.
-  menu.addEventListener('click', function (e) {
-    if (e.target.tagName === 'A') setOpen(false);
-  });
-})();
-</script>
+</main>
 
 </body>
 </html>

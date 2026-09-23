@@ -1,0 +1,283 @@
+/* ==========================================================================
+   Duminguz home -- DGZ_homePage2
+
+   Built from Figma kTQ4xLTJJ16sMcs4JTvRRg, node 2348:246, measured 2026-09-23.
+   The design is one 1920 x 1080 screen, so the page is a 16:9 stage that scales
+   whole rather than a layout that reflows. Every position below is the measured
+   pixel divided by 1920 or 1080, and every type size is in `cqw` -- 1cqw is one
+   percent of the stage width -- so the design holds its proportions at any size.
+
+   THE LAYOUT IS THE ART DIRECTOR'S. Reproduce it; do not "improve" it here.
+   ========================================================================== */
+
+:root {
+  /* The frame colour is NOT in the brandbook. Measured #EB00DC from
+     Frame_window; the brandbook's purples are #842484 and #A24795. Isolated
+     here so it is one line to change if the palette is reconciled. */
+  --hero-frame: #EB00DC;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body.dgz-hero {
+  margin: 0;
+  display: grid;
+  place-items: center;
+  background: var(--dgz-ink);
+  color: #fff;
+  font-family: var(--dgz-font-body);
+  overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   The stage
+   -------------------------------------------------------------------------- */
+.stage {
+  position: relative;
+  container-type: inline-size;
+  width: min(100vw, 177.7778vh);   /* 16:9, whichever axis runs out first */
+  aspect-ratio: 16 / 9;
+  overflow: hidden;
+  background: var(--dgz-ink);
+}
+
+/* image 6: 1932.53 x 1086.82 at x=-6.27, cover, 80% opacity over the ink */
+.stage__bg {
+  position: absolute;
+  top: 0;
+  left: -0.3264%;                  /* -6.265 / 1920 */
+  width: 100.6526%;                /* 1932.531 / 1920 */
+  height: 100.6316%;               /* 1086.821 / 1080 */
+  object-fit: cover;
+  opacity: .8;
+  pointer-events: none;
+}
+
+/* Frame_window, the full-bleed neon border */
+.stage__frame {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+/* --------------------------------------------------------------------------
+   Type
+   -------------------------------------------------------------------------- */
+.stage__roles,
+.stage__pitch h1,
+.stage__pitch p,
+.stage__mail {
+  font-family: var(--dgz-font-display);
+  margin: 0;
+  color: #fff;
+}
+
+/* 48px DemiBold, centred, y=113, tracking 5.76 */
+.stage__roles {
+  position: absolute;
+  top: 10.463%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  font-weight: 600;
+  font-size: 2.5cqw;               /* 48 / 1920 */
+  line-height: 1.15;
+  letter-spacing: .12em;           /* 5.76 / 48 */
+  text-align: center;
+  white-space: nowrap;
+}
+
+/* Group 2 -- x=216.5, y=226.87, 605.34 x 448.13. The file groups the headline
+   and the line under it, so they are one block here too and the text flows
+   inside it. Anchoring each at its own fixed y makes them collide the moment
+   the display face falls back to a wider substitute. */
+.stage__pitch {
+  position: absolute;
+  left: 11.276%;                   /* 216.5 / 1920 */
+  top: 21.007%;                    /* 226.87 / 1080 */
+  width: 31.528%;                  /* 605.343 / 1920 */
+}
+
+/* 93.6px DemiBold, tracking 1.872 */
+.stage__pitch h1 {
+  font-weight: 600;
+  font-size: 4.875cqw;             /* 93.6 / 1920 */
+  line-height: 1.12;
+  letter-spacing: .02em;           /* 1.872 / 93.6 */
+}
+
+/* 62.4px Medium, width 467.6, tracking 7.488. The gap measures 21px. */
+.stage__pitch p {
+  margin-top: 1.094cqw;            /* 21 / 1920 */
+  width: 77.246%;                  /* 467.604 / 605.343 */
+  font-weight: 500;
+  font-size: 3.25cqw;              /* 62.4 / 1920 */
+  line-height: 1.24;
+  letter-spacing: .12em;           /* 7.488 / 62.4 */
+}
+
+/* Duminguz_Logo_Colored, 504 square at x=1199.5, y=210. Three stacked groups,
+   which is how the neon is built -- they are not duplicates. */
+.stage__logo {
+  position: absolute;
+  left: 62.474%;
+  top: 19.444%;
+  width: 26.25%;
+  aspect-ratio: 1;
+}
+
+.stage__logo img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* 48px Medium, centred, y=892.1, tracking 5.76 */
+.stage__mail {
+  position: absolute;
+  top: 82.602%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 500;
+  font-size: 2.5cqw;
+  letter-spacing: .12em;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.stage__mail:hover,
+.stage__mail:focus-visible { color: var(--dgz-blue); }
+
+/* --------------------------------------------------------------------------
+   The three buttons -- 276.75 x 90, Space Grotesk Medium 31.5, uppercase.
+   Their y values differ by a pixel or two in the file; reproduced as measured.
+   -------------------------------------------------------------------------- */
+.stage__links a {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  width: 14.414%;                  /* 276.75 / 1920 */
+  height: 8.333%;                  /*  90    / 1080 */
+  font-family: var(--dgz-font-body);
+  font-weight: 500;
+  font-size: 1.6406cqw;            /* 31.5 / 1920 */
+  letter-spacing: .04em;           /* 1.26 / 31.5 */
+  text-transform: uppercase;
+  text-decoration: none;
+  color: var(--dgz-blue);
+  transition: color .2s ease, transform .2s ease;
+}
+
+.stage__links a:hover,
+.stage__links a:focus-visible { color: #fff; transform: translateY(-2px); }
+
+.stage__links .is-linkedin  { left: 26.419%; top: 86.643%; }
+.stage__links .is-artstation{ left: 42.793%; top: 86.711%; }
+.stage__links .is-behance   { left: 59.167%; top: 86.574%; }
+
+/* LinkedIn is the one in orchid, with a glow and a rule under it. */
+.stage__links .is-linkedin {
+  color: var(--dgz-orchid);
+  text-shadow: 0 0 2.25px rgba(115, 202, 231, .42);
+}
+
+.stage__links .is-linkedin::after {
+  content: "";
+  position: absolute;
+  left: 9.42%;
+  right: 18.02%;
+  top: 66.69%;
+  height: 8.5%;
+  background: url("../img/hero/linkedin-rule.svg") no-repeat center / 100% 100%;
+}
+
+/* --------------------------------------------------------------------------
+   Portrait and small screens.
+   The design has no mobile frame, and a 16:9 stage on a phone is a postage
+   stamp, so below this the same content stacks. Nothing is reinterpreted --
+   the pieces keep their order, their colours and their type.
+   -------------------------------------------------------------------------- */
+@media (max-width: 820px), (max-aspect-ratio: 1 / 1) {
+  /* Stacked, the copy lands on the bright middle of the artwork instead of the
+     dark left side it was composed against, so the art moves to the body with
+     a scrim over it. That also stops it painting over the frame. */
+  body.dgz-hero {
+    display: block;
+    overflow: auto;
+    background:
+      linear-gradient(rgba(28, 26, 24, .62), rgba(28, 26, 24, .62)),
+      url("../img/hero/backdrop-1024.webp") center / cover no-repeat,
+      var(--dgz-ink);
+  }
+
+  .stage__bg { display: none; }
+
+  .stage {
+    container-type: normal;
+    width: 100%;
+    aspect-ratio: auto;
+    min-height: 100svh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: clamp(18px, 4vw, 32px);
+    padding: clamp(28px, 7vw, 56px) 22px clamp(36px, 8vw, 64px);
+    border: 8px solid var(--hero-frame);   /* the SVG frame is 16:9 only */
+  }
+
+  .stage__frame { display: none; }
+
+  .stage__roles,
+  .stage__pitch,
+  .stage__pitch h1,
+  .stage__pitch p,
+  .stage__mail,
+  .stage__links a {
+    position: static;
+    transform: none;
+    width: auto;
+    inset: auto;
+  }
+
+  /* The mark keeps its own positioning context -- its three neon layers are
+     absolute, so zeroing this would anchor them to the whole stage. */
+  .stage__logo {
+    position: relative;
+    inset: auto;
+    transform: none;
+    flex: none;
+  }
+
+  .stage__roles {
+    font-size: clamp(.72rem, 3.1vw, 1.05rem);
+    white-space: normal;
+    text-align: center;
+  }
+
+  .stage__logo { width: min(240px, 58vw); }
+
+  .stage__pitch { text-align: center; }
+  .stage__pitch h1 { font-size: clamp(1.9rem, 8.4vw, 3rem); margin-bottom: .5em; }
+  .stage__pitch p  { font-size: clamp(1.05rem, 4.6vw, 1.6rem); }
+
+  .stage__mail { font-size: clamp(.95rem, 4vw, 1.4rem); }
+
+  .stage__links {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: clamp(14px, 5vw, 28px);
+  }
+
+  .stage__links a { font-size: clamp(.85rem, 3.6vw, 1.1rem); }
+  .stage__links .is-linkedin::after { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .stage__links a, .stage__mail { transition: none; }
+}
