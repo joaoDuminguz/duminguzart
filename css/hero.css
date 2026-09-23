@@ -11,10 +11,11 @@
    ========================================================================== */
 
 :root {
-  /* The frame colour is NOT in the brandbook. Measured #EB00DC from
-     Frame_window; the brandbook's purples are #842484 and #A24795. Isolated
-     here so it is one line to change if the palette is reconciled. */
-  --hero-frame: #EB00DC;
+  /* Frame_window is drawn in orchid, a brandbook colour. The #EB00DC that stood
+     here until 2026-09-23 came from a stale SVG export and was never in the file;
+     the Inspect block states `border: 20px solid #A24795`. Kept as its own
+     property because the two corner details share it. */
+  --hero-frame: var(--dgz-orchid);
 }
 
 *, *::before, *::after { box-sizing: border-box; }
@@ -55,12 +56,15 @@ body.dgz-hero {
   pointer-events: none;
 }
 
-/* Frame_window, the full-bleed neon border */
+/* Frame_window / Rectangle -- inset 0, a 20px border, over everything.
+   No asset. The file states a plain border, and a border scales exactly and
+   re-colours in one line, where an SVG has to be re-exported for either. The
+   two corner details (Detail1, Details2) are drawn vectors and are NOT here
+   yet -- see DuminguzHUB/portfolio/duminguz-art/ui/components.md §3. */
 .stage__frame {
   position: absolute;
   inset: 0;
-  width: 100%;
-  height: 100%;
+  border: 1.0417cqw solid var(--hero-frame);   /* 20 / 1920 */
   pointer-events: none;
 }
 
@@ -207,10 +211,12 @@ body.dgz-hero {
   .stage {
     width: min(100vw, 56.25vh);    /* 9:16 */
     aspect-ratio: 9 / 16;
-    border: 2.4cqw solid var(--hero-frame);
   }
 
-  .stage__frame { display: none; }  /* the 16:9 SVG does not fit this frame */
+  /* The same 20px border, now against a 1080-wide frame. The border is
+     rotation-invariant, so it needs no transform -- only the two corner details
+     rotate, and they are not built yet. */
+  .stage__frame { border-width: 1.8519cqw; }   /* 20 / 1080 */
 
   .stage__bg { left: 0; width: 100%; height: 100%; opacity: 1; }
 
