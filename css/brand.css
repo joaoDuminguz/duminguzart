@@ -64,14 +64,18 @@
   --dgz-w-body:     400;
   --dgz-w-body-b:   700;
 
-  /* The design unit.
+  /* The design unit -- for PICTURE, not for type.
 
-     The type scale below is authored at 1920 wide, so every size is written as
-     a count of design pixels times this unit. On a normal flowing page one
-     design pixel is one CSS pixel. Inside a fixed-ratio stage the stage sets
-     it to a fraction of its own width instead, and the whole scale rides the
-     stage with no second set of numbers to keep in sync. */
-  --dgz-u: 1px;
+     The design is authored at 1920 wide, so one design pixel is 1/1920 of the
+     viewport width, floored so it never disappears and capped at 1px so the
+     drawing never exceeds the size it was drawn at.
+
+     WIDTH ONLY, deliberately. It was `min(vw, vh)` until 2026-09-23, which
+     made everything shrink when a window got shorter -- correct for fitting a
+     whole picture on screen, wrong for a page. Type left this unit at the same
+     time and is fluid on its own terms below; what stays here is the frame
+     border, the mark and anything else that is genuinely drawing. */
+  --dgz-u: clamp(0.34px, 0.0520833vw, 1px);
 }
 
 /* --------------------------------------------------------------------------
@@ -82,6 +86,21 @@
    Line height is a ratio rather than the stated px, so a style holds at any
    size. Every one of the eight lands between 1.286 and 1.308, which is a
    designed constant and not eight separate decisions.
+
+   FLUID since 2026-09-23. Each size is `clamp(floor, fluid, design size)`,
+   interpolated linearly between a 480 and a 1920 viewport:
+
+     - the DESIGN SIZE is the ceiling, reached at 1920 and never exceeded, so
+       the type is never larger than it was drawn;
+     - the FLOOR is a readable size, chosen per style rather than derived, so
+       a caption stays legible where proportional scaling would have made it
+       9px on a phone;
+     - it follows the WIDTH only. Window height must not change reading size,
+       which is what the previous `min(vw, vh)` unit did.
+
+   Floor and ceiling are in `rem` on purpose: a `px` clamp ignores the reader's
+   own browser font size, which is the one accessibility setting a type scale
+   has no business overriding.
    -------------------------------------------------------------------------- */
 
 .dgz-h0, .dgz-h1, .dgz-h2, .dgz-sub, .dgz-caption {
@@ -96,7 +115,7 @@
    one with negative tracking: at 116 the letters close up on their own. */
 .dgz-h0 {
   font-weight: 300;
-  font-size: calc(116 * var(--dgz-u));
+  font-size: clamp(2.5000rem, 0.9167rem + 5.2778vw, 7.2500rem);
   line-height: 1.3017;             /* 151 / 116 */
   letter-spacing: -0.02em;
   text-transform: uppercase;
@@ -105,7 +124,7 @@
 /* H1_DGZ -- SemiBold */
 .dgz-h1 {
   font-weight: 600;
-  font-size: calc(72 * var(--dgz-u));
+  font-size: clamp(1.8750rem, 1.0rem + 2.9167vw, 4.5000rem);
   line-height: 1.3056;             /* 94 / 72 */
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -116,7 +135,7 @@
    value, not as the label. */
 .dgz-h2 {
   font-weight: 700;
-  font-size: calc(58 * var(--dgz-u));
+  font-size: clamp(1.6250rem, 0.9583rem + 2.2222vw, 3.6250rem);
   line-height: 1.2931;             /* 75 / 58 */
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -125,7 +144,7 @@
 /* Sub_DGZ -- Bold. The one display style that is not uppercase. */
 .dgz-sub {
   font-weight: 700;
-  font-size: calc(46 * var(--dgz-u));
+  font-size: clamp(1.2500rem, 0.7083rem + 1.8056vw, 2.8750rem);
   line-height: 1.3043;             /* 60 / 46 */
   letter-spacing: 0.12em;
 }
@@ -134,7 +153,7 @@
    and it is what makes a caption read as a label rather than as small text. */
 .dgz-caption {
   font-weight: 700;
-  font-size: calc(26 * var(--dgz-u));
+  font-size: clamp(0.7500rem, 0.4583rem + 0.9722vw, 1.6250rem);
   line-height: 1.3077;             /* 34 / 26 */
   letter-spacing: 0.26em;
   text-transform: uppercase;
@@ -153,7 +172,7 @@
 /* Button_DGZ -- Bold */
 .dgz-button {
   font-weight: 700;
-  font-size: calc(28 * var(--dgz-u));
+  font-size: clamp(0.8125rem, 0.5000rem + 1.0417vw, 1.7500rem);
   line-height: 1.2857;             /* 36 / 28 */
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -163,7 +182,7 @@
    case separate them. */
 .dgz-body {
   font-weight: 400;
-  font-size: calc(28 * var(--dgz-u));
+  font-size: clamp(0.9375rem, 0.6667rem + 0.9028vw, 1.7500rem);
   line-height: 1.2857;             /* 36 / 28 */
   letter-spacing: 0.04em;
 }

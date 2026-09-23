@@ -3,18 +3,25 @@
 
    Figma kTQ4xLTJJ16sMcs4JTvRRg, node 2348:246. Authored at 1920 x 1080.
 
-   NOT a fixed 16:9 stage any more. Rebuilt 2026-09-23 to João's rule:
+   FLUID, since 2026-09-23. Three rebuilds got here and the last two matter:
 
-     "o background deve ajustar de acordo com o tamanho da tela de forma
-      responsiva. assim como o texto deve se movimentar acompanhando o
-      alinhamento a esquerda do texto h1 e h2, da logo a direita e o conteudo
-      centralizado segue centralizado. A foto deve aumentar de acordo com a
-      largura, mas sempre alinhada ao topo e centralizada."
+     1. a fixed 16:9 stage that scaled whole, like a poster;
+     2. a full-viewport stage with the composition ANCHORED to the edges but
+        still positioned in absolute design-pixel coordinates;
+     3. this -- a flow layout whose spacing is a set of RELATIONSHIPS.
 
-   So the frame fills the viewport and the composition ANCHORS rather than
-   scales: the pitch holds the left edge, the mark holds the right, the roles
-   line, the mail and the buttons stay centred, and the art covers from the
-   top. Only the type and the insets scale, on the tighter of the two axes.
+   Why (2) was not enough: its vertical rhythm was still fixed numbers, so a
+   window of a different height left a hole in the middle or crushed the top
+   and bottom, and its unit followed `min(vw, vh)`, which shrank the type when
+   a window got shorter. Type has left that unit entirely -- it is fluid on its
+   own terms in brand.css -- and what remains on `--dgz-u` is drawing: the
+   frame border and the mark.
+
+   THE COST, accepted knowingly: the page no longer reproduces the frame pixel
+   for pixel. It matches at the reference size and holds the relationships
+   everywhere else. Five of the six pages in the Ronaldo plan carry
+   variable-length content and could never have been fixed compositions, so
+   this system was needed regardless.
 
    THE LAYOUT IS THE ART DIRECTOR'S. Reproduce it; do not "improve" it here.
    ========================================================================== */
@@ -47,25 +54,6 @@ body.dgz-hero {
   height: 100dvh;                  /* so a mobile browser's chrome cannot clip it */
   overflow: hidden;
   background: var(--dgz-ink);
-
-  /* One design pixel.
-
-     The design is 1920 x 1080, so `min()` takes whichever axis is tighter and
-     the composition never outgrows the screen on either one. The floor stops
-     the type vanishing on a small window; there is no ceiling, because a
-     larger screen should get larger type. */
-  --dgz-u: max(0.5px, min(0.0520833vw, 0.0925926vh));
-
-  /* Content inset from the frame -- symmetric, the pitch from the left and the
-     mark from the right.
-
-     The `max()` is doing real work. `--dgz-u` follows whichever axis is
-     tighter, so on a window that is wide but short the unit shrinks with the
-     HEIGHT while the width stays wide, and an inset expressed only in design
-     pixels leaves the content pinned to the edges with the middle empty. The
-     9vw floor pulls it back in. On a 16:9 screen the design value wins and
-     nothing changes. */
-  --pad: max(calc(260 * var(--dgz-u)), 9vw);
 }
 
 /* The art covers from the TOP, centred horizontally, growing with the width.
@@ -86,20 +74,60 @@ body.dgz-hero {
    No asset. The file states a plain border, and a border scales exactly and
    re-colours in one line, where an SVG has to be re-exported for either. The
    two corner details (Detail1, Details2) are drawn vectors and are NOT here
-   yet -- see DuminguzHUB/portfolio/duminguz-art/ui/components.md §3. */
+   yet -- see DuminguzHUB/portfolio/duminguz-art/ui/components.md section 3. */
 .stage__frame {
   position: absolute;
   inset: 0;
   border: calc(20 * var(--dgz-u)) solid var(--hero-frame);
   pointer-events: none;
+  z-index: 2;
+}
+
+/* --------------------------------------------------------------------------
+   The layout -- three rows, distributed
+
+   `space-between` is the whole vertical system. The roles line sits at the
+   top, the foot at the bottom, and the body takes what is left, so the rhythm
+   redistributes itself at any window height instead of being a set of
+   coordinates that only holds at one.
+
+   The side padding says the same thing three ways: a floor in rem so it never
+   disappears on a phone, a fluid middle so it grows with the window, and the
+   design's 260 as the ceiling so it never exceeds what was drawn.
+   -------------------------------------------------------------------------- */
+.stage__grid {
+  position: relative;
+  z-index: 1;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: clamp(1.5rem, 3vw, 3.5rem);
+  padding: clamp(1.5rem, 4vw, 5.5rem) clamp(1.25rem, 9vw, 16.25rem);
+}
+
+/* The middle row: pitch left, mark right, centred against each other. */
+.stage__body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: clamp(1.5rem, 4vw, 6rem);
+  flex: 1;
+  min-height: 0;
+}
+
+.stage__foot {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: clamp(.75rem, 1.6vw, 2.25rem);
 }
 
 /* --------------------------------------------------------------------------
    Type
 
-   Every block now takes a NAMED STYLE from the scale in brand.css. Nothing
-   here sets a size, a weight or a tracking -- only position and colour. That
-   is the point of the scale: a change of type is a change in one place.
+   Every block takes a NAMED STYLE from the scale in brand.css. Nothing here
+   sets a size, a weight or a tracking -- only position and colour.
    -------------------------------------------------------------------------- */
 
 .stage__roles,
@@ -110,65 +138,56 @@ body.dgz-hero {
   color: #fff;
 }
 
-/* Caption_DGZ, centred at the top */
+/* Caption_DGZ, centred at the top. */
 .stage__roles {
-  position: absolute;
-  top: calc(94 * var(--dgz-u));
-  left: 50%;
-  transform: translateX(-50%);
-  width: 100%;
   text-align: center;
-  white-space: nowrap;
+  text-wrap: balance;
 }
 
-/* The pitch holds the LEFT edge -- it moves with it rather than scaling with
-   the frame. Headline and subline flow as one block, because anchoring each
-   at its own fixed y makes them collide the moment a face substitutes. */
 /* EVERY break in this block is authored with <br>, and nothing here wraps.
 
-   That is deliberate and it is the third time the lesson has been paid for.
-   Relying on a box width to produce a break means the break belongs to the
-   font metrics, not to the design: Chakra Petch re-broke it once by being
-   1.5x wider than TT Carvist, and `text-wrap: balance` -- inherited from the
-   h1 rule in brand.css -- re-broke it again by splitting the lines evenly
-   instead of greedily. With `nowrap`, a face that stops fitting overflows
-   visibly instead of quietly recomposing the headline. */
+   Third time this has been paid for. Relying on a box width to produce a
+   break means the break belongs to the font metrics, not to the design:
+   Chakra Petch re-broke it once by setting 1.5x wider than TT Carvist, and
+   `text-wrap: balance` -- inherited from the h1 rule in brand.css -- re-broke
+   it again by splitting the lines evenly instead of greedily. With `nowrap`,
+   a face that stops fitting overflows visibly instead of quietly recomposing
+   the headline. */
 .stage__pitch {
-  position: absolute;
-  left: var(--pad);
-  top: calc(257 * var(--dgz-u));
   white-space: nowrap;
   text-wrap: nowrap;
 }
 
 /* H2_DGZ. Two blocks with a gap, not one wrapped line: the break after
-   "pixels..." is authored, and the second half is the one set in sky blue. */
+   "pixels..." is authored, and the second half is the one set in sky blue.
+
+   The gaps are in `em` now rather than design pixels, so they scale with the
+   type they separate rather than with the window. That is what keeps the
+   block reading as one thing at every size. */
 .stage__pitch h1 > span {
   display: block;
 }
 
 .stage__pitch-b {
-  margin-top: calc(54 * var(--dgz-u));
+  margin-top: .75em;
   color: var(--dgz-blue);
 }
 
-/* Sub_DGZ. The three lines are authored with <br>, so `nowrap` states that: a
-   face that stops fitting will overflow visibly instead of quietly breaking a
-   phrase in half, which is what happened when Chakra Petch arrived. */
 .stage__pitch p {
-  margin-top: calc(54 * var(--dgz-u));
-  white-space: nowrap;
+  margin-top: 1em;
 }
 
-/* Duminguz_Logo_Colored holds the RIGHT edge. Three stacked groups, which is
-   how the neon is built -- they are not duplicates. */
+/* Duminguz_Logo_Colored. Three stacked groups, which is how the neon is built
+   -- they are not duplicates. It is drawing, so it rides --dgz-u and is capped
+   at the size it was drawn, with a floor so it does not vanish. */
 .stage__logo {
-  position: absolute;
-  right: var(--pad);
-  /* 1.5x, grown about its own centre rather than downward from the old top,
-     so the mark stays where it sat in the composition. */
-  top: calc(235 * var(--dgz-u));
-  width: calc(510 * var(--dgz-u));
+  position: relative;
+  flex: 0 0 auto;
+  /* The `vh` cap is the one place height is allowed back in, and only because
+     this is a picture. A drawing that does not fit the window should shrink;
+     a paragraph should not, which is why type is on width alone. */
+  width: min(calc(510 * var(--dgz-u)), 46vh);
+  min-width: clamp(7rem, 22vw, 10rem);
   aspect-ratio: 1;
 }
 
@@ -179,12 +198,7 @@ body.dgz-hero {
   height: 100%;
 }
 
-/* Caption_DGZ, centred, anchored to the BOTTOM */
 .stage__mail {
-  position: absolute;
-  bottom: calc(142 * var(--dgz-u));
-  left: 50%;
-  transform: translateX(-50%);
   text-decoration: none;
   white-space: nowrap;
 }
@@ -197,9 +211,7 @@ body.dgz-hero {
 
    ALL THREE ARE IDENTICAL. The frame draws LinkedIn differently because it is
    demonstrating the hover state on one of them, not because that button is
-   special -- confirmed by João 2026-09-23. It had been reproduced as a
-   permanent style, which made one profile link look like the primary of the
-   three for no stated reason.
+   special -- confirmed by Joao 2026-09-23.
 
    The state IS the colour: the set encodes rest, hover and pressed as three
    colours rather than three shades of one, and the same sequence runs through
@@ -207,13 +219,10 @@ body.dgz-hero {
    shifts under the cursor.
    -------------------------------------------------------------------------- */
 .stage__links {
-  position: absolute;
-  bottom: calc(60 * var(--dgz-u));
-  left: 50%;
-  transform: translateX(-50%);
   display: flex;
-  gap: calc(145 * var(--dgz-u));
-  white-space: nowrap;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: clamp(1.5rem, 7.5vw, 9rem);
 }
 
 /* Empty -- at rest */
@@ -231,7 +240,8 @@ body.dgz-hero {
 .stage__links a:focus-visible { color: var(--dgz-clay); }
 
 /* The underline is drawn always and revealed by state, so it is not being
-   fetched at the moment the cursor arrives.
+   fetched at the moment the cursor arrives. Sized in `em` so it tracks the
+   word rather than the window.
 
    ASSET IS PROVISIONAL: this is `linkedin-rule.svg`, exported back when the
    rule was thought to belong to one button. It belongs to the component, and
@@ -242,8 +252,8 @@ body.dgz-hero {
   position: absolute;
   left: -8%;
   right: -12%;
-  bottom: calc(-12 * var(--dgz-u));
-  height: calc(5 * var(--dgz-u));
+  bottom: -.35em;
+  height: .14em;
   background: url("../img/hero/linkedin-rule.svg") no-repeat center / 100% 100%;
   opacity: 0;
   transition: opacity .2s ease;
@@ -264,33 +274,28 @@ body.dgz-hero {
 /* --------------------------------------------------------------------------
    Portrait -- DGZ_homePageMOBILE, Figma 2350:481.
 
-   His own 9:16 frame, not a reflow of the desktop one. The positions below
-   are still measured off a screenshot rather than the file, and are the last
-   part of this page not read from the design.
+   His own 9:16 frame, not a reflow of the landscape one: the pitch is right
+   aligned and the mark drops below it rather than sitting beside it.
    -------------------------------------------------------------------------- */
 @media (max-aspect-ratio: 1 / 1) {
-  .stage {
-    /* The mobile frame is authored at 1080 wide and states its sizes in its
-       own pixels -- MobileCaption_DGZ is 26 there, not 26 scaled down -- so
-       the design unit divides by 1080 and 1920, not the other way round. */
-    --dgz-u: max(0.5px, min(0.0925926vw, 0.0520833vh));
-    --pad: calc(80 * var(--dgz-u));
+  /* The mobile frame is authored at 1080 wide, so a design pixel is 1/1080 of
+     the viewport rather than 1/1920. */
+  .stage { --dgz-u: clamp(0.34px, 0.0925926vw, 1px); }
+
+  .stage__body {
+    flex-direction: column;
+    align-items: flex-end;
+    justify-content: center;
+    gap: clamp(2rem, 8vw, 5rem);
   }
 
-  /* The pitch block sits RIGHT aligned, unlike the landscape frame */
-  .stage__pitch {
-    left: auto;
-    right: var(--pad);
-    text-align: right;
-  }
+  .stage__pitch { text-align: right; }
 
-  /* The mark drops to the middle right, over the cloak */
-  .stage__logo {
-    top: calc(880 * var(--dgz-u));
-    width: calc(430 * var(--dgz-u));
-  }
+  .stage__logo { width: calc(430 * var(--dgz-u)); }
 
-  .stage__links { gap: calc(90 * var(--dgz-u)); }
+  /* At the readable floor this line is wider than a phone, so it wraps. A
+     legible size that wraps beats a composed line nobody can read. */
+  .stage__roles { white-space: normal; }
 }
 
 @media (prefers-reduced-motion: reduce) {

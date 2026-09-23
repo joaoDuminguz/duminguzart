@@ -51,35 +51,46 @@
   <!-- Frame_window. The border is CSS; the two corner details are still missing. -->
   <div class="stage__frame" aria-hidden="true"></div>
 
-  <p class="stage__roles dgz-caption">
-    Game Art Director | Character Artist | 2D &amp; 3D Game Artist<br>
-    Pixel Art &middot; Concept Art &middot; Illustration
-  </p>
+  <!-- Three rows, distributed with space-between. The vertical rhythm is a
+       relationship, not a set of coordinates, so it redistributes at any
+       window height instead of leaving a hole or crushing the edges. -->
+  <div class="stage__grid">
 
-  <div class="stage__pitch">
-    <!-- Two blocks, not one wrapped line. The break after "pixels..." is
-         authored, and the second half is set in sky blue. -->
-    <h1 class="dgz-h2">
-      <span class="stage__pitch-a">Some see the<br>pixels&hellip;</span>
-      <span class="stage__pitch-b">I see the story!</span>
-    </h1>
-    <p class="dgz-sub">Nice to meet you<br>I&rsquo;m the indie studio<br>ultimate handyman.</p>
+    <p class="stage__roles dgz-caption">
+      Game Art Director | Character Artist | 2D &amp; 3D Game Artist<br>
+      Pixel Art &middot; Concept Art &middot; Illustration
+    </p>
+
+    <div class="stage__body">
+      <div class="stage__pitch">
+        <!-- Two blocks, not one wrapped line. The break after "pixels..." is
+             authored, and the second half is set in sky blue. -->
+        <h1 class="dgz-h2">
+          <span class="stage__pitch-a">Some see the<br>pixels&hellip;</span>
+          <span class="stage__pitch-b">I see the story!</span>
+        </h1>
+        <p class="dgz-sub">Nice to meet you<br>I&rsquo;m the indie studio<br>ultimate handyman.</p>
+      </div>
+
+      <!-- The neon mark is three stacked groups; that is how the glow is built. -->
+      <div class="stage__logo">
+        <img src="img/hero/logo-a.svg" alt="Duminguz">
+        <img src="img/hero/logo-b.svg" alt="" aria-hidden="true">
+        <img src="img/hero/logo-c.svg" alt="" aria-hidden="true">
+      </div>
+    </div>
+
+    <div class="stage__foot">
+      <a class="stage__mail dgz-caption" href="mailto:duminguz.art@gmail.com">duminguz.art@gmail.com</a>
+
+      <nav class="stage__links" aria-label="Profiles">
+        <a class="is-linkedin dgz-button"   href="https://www.linkedin.com/in/duminguz/" target="_blank" rel="noopener">LinkedIn</a>
+        <a class="is-artstation dgz-button" href="https://www.artstation.com/joaoduminguz" target="_blank" rel="noopener">ArtStation</a>
+        <a class="is-behance dgz-button"    href="https://www.behance.net/joaoduminguz" target="_blank" rel="noopener">Behance</a>
+      </nav>
+    </div>
+
   </div>
-
-  <!-- The neon mark is three stacked groups; that is how the glow is built. -->
-  <div class="stage__logo">
-    <img src="img/hero/logo-a.svg" alt="Duminguz">
-    <img src="img/hero/logo-b.svg" alt="" aria-hidden="true">
-    <img src="img/hero/logo-c.svg" alt="" aria-hidden="true">
-  </div>
-
-  <a class="stage__mail dgz-caption" href="mailto:duminguz.art@gmail.com">duminguz.art@gmail.com</a>
-
-  <nav class="stage__links" aria-label="Profiles">
-    <a class="is-linkedin dgz-button"   href="https://www.linkedin.com/in/duminguz/" target="_blank" rel="noopener">LinkedIn</a>
-    <a class="is-artstation dgz-button" href="https://www.artstation.com/joaoduminguz" target="_blank" rel="noopener">ArtStation</a>
-    <a class="is-behance dgz-button"    href="https://www.behance.net/joaoduminguz" target="_blank" rel="noopener">Behance</a>
-  </nav>
 
 </main>
 
