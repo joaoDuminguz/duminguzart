@@ -56,9 +56,16 @@ body.dgz-hero {
      larger screen should get larger type. */
   --dgz-u: max(0.5px, min(0.0520833vw, 0.0925926vh));
 
-  /* Content inset from the frame. Read off the updated frame, where the pitch
-     and the mark sit symmetrically about 170 from their own edges. */
-  --pad: calc(170 * var(--dgz-u));
+  /* Content inset from the frame -- symmetric, the pitch from the left and the
+     mark from the right.
+
+     The `max()` is doing real work. `--dgz-u` follows whichever axis is
+     tighter, so on a window that is wide but short the unit shrinks with the
+     HEIGHT while the width stays wide, and an inset expressed only in design
+     pixels leaves the content pinned to the edges with the middle empty. The
+     9vw floor pulls it back in. On a 16:9 screen the design value wins and
+     nothing changes. */
+  --pad: max(calc(260 * var(--dgz-u)), 9vw);
 }
 
 /* The art covers from the TOP, centred horizontally, growing with the width.
@@ -158,8 +165,10 @@ body.dgz-hero {
 .stage__logo {
   position: absolute;
   right: var(--pad);
-  top: calc(320 * var(--dgz-u));
-  width: calc(340 * var(--dgz-u));
+  /* 1.5x, grown about its own centre rather than downward from the old top,
+     so the mark stays where it sat in the composition. */
+  top: calc(235 * var(--dgz-u));
+  width: calc(510 * var(--dgz-u));
   aspect-ratio: 1;
 }
 
