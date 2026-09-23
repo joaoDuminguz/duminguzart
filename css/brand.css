@@ -76,6 +76,18 @@
      time and is fluid on its own terms below; what stays here is the frame
      border, the mark and anything else that is genuinely drawing. */
   --dgz-u: clamp(0.34px, 0.0520833vw, 1px);
+
+  /* One knob for the whole type system.
+
+     The eight sizes are AUTHORED, not generated -- their ratios are
+     1.61, 1.24, 1.26, 1.64, 1.08, so no single modular scale produces
+     them and imposing one would overwrite the design. This multiplies
+     them instead, so the system moves as a whole and the relationships
+     between styles never drift.
+
+     Set it on :root to retune everything, or on one section to make that
+     section quieter or louder than the rest. */
+  --dgz-type-scale: 1;
 }
 
 /* --------------------------------------------------------------------------
@@ -107,7 +119,7 @@
   font-family: var(--dgz-font-display);
 }
 
-.dgz-button, .dgz-body {
+.dgz-button, .dgz-body, .dgz-body-accent {
   font-family: var(--dgz-font-body);
 }
 
@@ -115,7 +127,7 @@
    one with negative tracking: at 116 the letters close up on their own. */
 .dgz-h0 {
   font-weight: 300;
-  font-size: clamp(2.5000rem, 0.9167rem + 5.2778vw, 7.2500rem);
+  font-size: calc(clamp(2.5000rem, 0.9167rem + 5.2778vw, 7.2500rem) * var(--dgz-type-scale));
   line-height: 1.3017;             /* 151 / 116 */
   letter-spacing: -0.02em;
   text-transform: uppercase;
@@ -124,7 +136,7 @@
 /* H1_DGZ -- SemiBold */
 .dgz-h1 {
   font-weight: 600;
-  font-size: clamp(1.8750rem, 1.0rem + 2.9167vw, 4.5000rem);
+  font-size: calc(clamp(1.8750rem, 1.0rem + 2.9167vw, 4.5000rem) * var(--dgz-type-scale));
   line-height: 1.3056;             /* 94 / 72 */
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -135,7 +147,7 @@
    value, not as the label. */
 .dgz-h2 {
   font-weight: 700;
-  font-size: clamp(1.6250rem, 0.9583rem + 2.2222vw, 3.6250rem);
+  font-size: calc(clamp(1.6250rem, 0.9583rem + 2.2222vw, 3.6250rem) * var(--dgz-type-scale));
   line-height: 1.2931;             /* 75 / 58 */
   letter-spacing: 0.02em;
   text-transform: uppercase;
@@ -144,7 +156,7 @@
 /* Sub_DGZ -- Bold. The one display style that is not uppercase. */
 .dgz-sub {
   font-weight: 700;
-  font-size: clamp(1.2500rem, 0.7083rem + 1.8056vw, 2.8750rem);
+  font-size: calc(clamp(1.2500rem, 0.7083rem + 1.8056vw, 2.8750rem) * var(--dgz-type-scale));
   line-height: 1.3043;             /* 60 / 46 */
   letter-spacing: 0.12em;
 }
@@ -153,7 +165,7 @@
    and it is what makes a caption read as a label rather than as small text. */
 .dgz-caption {
   font-weight: 700;
-  font-size: clamp(0.7500rem, 0.4583rem + 0.9722vw, 1.6250rem);
+  font-size: calc(clamp(0.7500rem, 0.4583rem + 0.9722vw, 1.6250rem) * var(--dgz-type-scale));
   line-height: 1.3077;             /* 34 / 26 */
   letter-spacing: 0.26em;
   text-transform: uppercase;
@@ -172,7 +184,7 @@
 /* Button_DGZ -- Bold */
 .dgz-button {
   font-weight: 700;
-  font-size: clamp(0.8125rem, 0.5000rem + 1.0417vw, 1.7500rem);
+  font-size: calc(clamp(0.8125rem, 0.5000rem + 1.0417vw, 1.7500rem) * var(--dgz-type-scale));
   line-height: 1.2857;             /* 36 / 28 */
   letter-spacing: 0.04em;
   text-transform: uppercase;
@@ -180,11 +192,23 @@
 
 /* Body_DGZ -- Regular. Same size and metrics as the button; only weight and
    case separate them. */
-.dgz-body {
+.dgz-body,
+.dgz-body-accent {
   font-weight: 400;
-  font-size: clamp(0.9375rem, 0.6667rem + 0.9028vw, 1.7500rem);
+  font-size: calc(clamp(0.9375rem, 0.6667rem + 0.9028vw, 1.7500rem) * var(--dgz-type-scale));
   line-height: 1.2857;             /* 36 / 28 */
   letter-spacing: 0.04em;
+}
+
+/* Body Accent -- the ninth style, added from the type specimen 2026-09-23.
+
+   QUESTION OUTSTANDING: the specimen labels it "Space Grotesk - Regular", the
+   same as Body, but renders it visibly heavier. Same family, size, line and
+   tracking, so weight is the only thing that can be carrying the difference,
+   and Space Grotesk's next step up is Medium 500. Built at 500; if the label
+   is right and the weight is the typo, this is one line. */
+.dgz-body-accent {
+  font-weight: 500;
 }
 
 /* --------------------------------------------------------------------------

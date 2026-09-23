@@ -1,0 +1,614 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Duminguz Brand Workbench</title>
+<meta name="description" content="Live bench for the Duminguz type scale, palette and components.">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Chakra+Petch:wght@300;500;600;700&display=swap" rel="stylesheet">
+
+<!-- ===================================================================
+     THE ONE RULE OF THIS PAGE
+
+     It imports the REAL brand.css and never redefines a token. Every
+     specimen below is rendered by the same declaration the site renders,
+     so if it looks right here it looks right there. A workbench that
+     restates its own values is a mockup, and a mockup drifts.
+
+     Everything in <style> is bench furniture: layout, panels, readouts.
+     None of it is brand.
+     =================================================================== -->
+<link rel="stylesheet" href="../css/brand.css">
+
+<style>
+  *, *::before, *::after { box-sizing: border-box; }
+
+  body {
+    margin: 0;
+    padding: 0 0 8rem;
+    background: var(--dgz-ink);
+    color: var(--dgz-bone);
+    font-family: var(--dgz-font-body);
+    line-height: 1.5;
+  }
+
+  .wrap { max-width: 1600px; margin: 0 auto; padding: 0 clamp(1rem, 3vw, 3rem); }
+
+  /* --- the two-column shell -----------------------------------------
+     Bench on the left, a live view of the real site on the right. The
+     preview is an iframe of index.html, not a picture of it, so the scale
+     knob moves the actual page and the type system is judged where it is
+     used rather than on a specimen sheet.
+     ------------------------------------------------------------------ */
+  .shell { display: flex; gap: clamp(1rem, 2.5vw, 2.5rem); align-items: flex-start; }
+  .shell__bench { flex: 1 1 auto; min-width: 0; }
+
+  .shell__view {
+    flex: 0 0 auto;
+    position: sticky;
+    top: 5.5rem;
+    display: none;                      /* only when there is room for it */
+  }
+
+  @media (min-width: 1180px) { .shell__view { display: block; } }
+
+  .view__head {
+    display: flex; align-items: center; gap: .6rem; flex-wrap: wrap;
+    margin-bottom: .7rem;
+    font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dgz-fg-dim);
+  }
+  .view__head button {
+    font: inherit; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--dgz-fg-dim); background: transparent;
+    border: 1px solid var(--dgz-rule); border-radius: 999px;
+    padding: .3rem .7rem; cursor: pointer;
+  }
+  .view__head button[aria-pressed="true"] {
+    color: var(--dgz-ink); background: var(--dgz-blue); border-color: var(--dgz-blue);
+  }
+  .view__head a { color: var(--dgz-blue); text-decoration: none; margin-left: auto; }
+
+  /* The frame is scaled down with a transform so the page inside still
+     believes it is a real device width -- a CSS-resized iframe would change
+     the viewport the media queries see, which is the one thing that must
+     stay honest. */
+  .view__shell { width: max-content; border: 1px solid var(--dgz-rule); border-radius: 10px; overflow: hidden; background: #000; }
+  .view__stage { position: relative; }
+  .view__stage iframe {
+    display: block; border: 0;
+    transform-origin: top left;
+    background: var(--dgz-ink);
+  }
+  .view__note { margin: .55rem 0 0; font-size: .7rem; color: var(--dgz-fg-dim); font-variant-numeric: tabular-nums; }
+
+  /* --- the control bar ---------------------------------------------- */
+  .bar {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: rgba(28, 26, 24, .94);
+    backdrop-filter: blur(8px);
+    border-bottom: 1px solid var(--dgz-rule);
+    padding: .75rem 0;
+    margin-bottom: 3rem;
+  }
+  .bar .wrap { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem; }
+  .bar label { display: flex; align-items: center; gap: .6rem; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; color: var(--dgz-fg-dim); }
+  .bar input[type="range"] { width: 200px; accent-color: var(--dgz-blue); }
+  .bar output { font-variant-numeric: tabular-nums; color: var(--dgz-blue); min-width: 3.2em; }
+  .bar button {
+    font: inherit; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase;
+    color: var(--dgz-fg-dim); background: transparent;
+    border: 1px solid var(--dgz-rule); border-radius: 999px;
+    padding: .45rem 1rem; cursor: pointer;
+  }
+  .bar button:hover, .bar button:focus-visible { color: var(--dgz-bone); border-color: var(--dgz-blue); }
+  .bar .live { margin-left: auto; font-size: .8rem; color: var(--dgz-fg-dim); font-variant-numeric: tabular-nums; }
+
+  /* --- sections ------------------------------------------------------ */
+  section { margin: 0 0 5rem; }
+
+  .sec-head {
+    display: flex; align-items: baseline; gap: 1rem; flex-wrap: wrap;
+    padding-bottom: .6rem; margin-bottom: 2rem;
+    border-bottom: 1px solid var(--dgz-rule);
+  }
+  .sec-head h2 {
+    margin: 0; font-family: var(--dgz-font-body); font-weight: 700;
+    font-size: 1rem; letter-spacing: .18em; text-transform: uppercase;
+  }
+  .sec-head p { margin: 0; font-size: .85rem; color: var(--dgz-fg-dim); }
+
+  /* --- type specimens ------------------------------------------------ */
+  .spec { padding: 1.5rem 0; border-bottom: 1px dashed var(--dgz-rule); }
+  .spec:last-child { border-bottom: 0; }
+
+  .spec__meta {
+    display: flex; flex-wrap: wrap; gap: .5rem 1.25rem; align-items: baseline;
+    margin-bottom: .9rem;
+    font-size: .75rem; letter-spacing: .06em; color: var(--dgz-fg-dim);
+    font-variant-numeric: tabular-nums;
+  }
+  .spec__name { color: var(--dgz-blue); font-weight: 700; letter-spacing: .12em; text-transform: uppercase; }
+  .spec__now { color: var(--dgz-clay); font-weight: 700; }
+  .spec__sample { color: var(--dgz-bone); overflow-wrap: anywhere; }
+
+  /* Sizes across the fluid range, computed from the live clamp. */
+  .ramp { display: flex; flex-wrap: wrap; gap: .35rem; margin-top: .75rem; }
+  .ramp span {
+    font-size: .7rem; letter-spacing: .04em; color: var(--dgz-fg-dim);
+    border: 1px solid var(--dgz-rule); border-radius: 3px;
+    padding: .15rem .5rem; font-variant-numeric: tabular-nums;
+  }
+  .ramp b { color: var(--dgz-bone); font-weight: 500; }
+  .ramp .is-floor { border-color: var(--dgz-sea-deep); }
+  .ramp .is-ceil  { border-color: var(--dgz-orchid); }
+
+  /* --- colour -------------------------------------------------------- */
+  .swatches { display: grid; grid-template-columns: repeat(auto-fill, minmax(190px, 1fr)); gap: 1rem; }
+  .sw { border: 1px solid var(--dgz-rule); border-radius: 4px; overflow: hidden; }
+  .sw__chip { height: 74px; }
+  .sw__body { padding: .6rem .7rem .7rem; }
+  .sw__name { font-size: .78rem; font-weight: 700; letter-spacing: .06em; }
+  .sw__hex  { font-size: .72rem; color: var(--dgz-fg-dim); font-variant-numeric: tabular-nums; }
+  .sw__note { font-size: .72rem; color: var(--dgz-fg-dim); margin-top: .35rem; line-height: 1.35; }
+
+  .roles { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin-top: 1.75rem; }
+  .role { border: 1px solid var(--dgz-rule); border-left-width: 4px; border-radius: 4px; padding: .9rem 1rem; }
+  .role h3 { margin: 0 0 .2rem; font-family: var(--dgz-font-body); font-size: .8rem; letter-spacing: .14em; text-transform: uppercase; }
+  .role p { margin: 0; font-size: .78rem; color: var(--dgz-fg-dim); line-height: 1.45; }
+
+  /* --- components ---------------------------------------------------- */
+  .states { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 1.25rem; }
+  .state {
+    border: 1px solid var(--dgz-rule); border-radius: 4px;
+    padding: 1.6rem 1rem 1.1rem; text-align: center;
+  }
+  .state__tag { display: block; margin-bottom: 1.4rem; font-size: .68rem; letter-spacing: .14em; text-transform: uppercase; color: var(--dgz-fg-dim); }
+  .state__tag em { font-style: normal; color: var(--dgz-clay); }
+
+  /* The frameless button, exactly as the site declares it. Forced-state
+     copies sit beside the live one so all three are visible at once. */
+  .btn-empty { position: relative; text-decoration: none; color: var(--dgz-blue); transition: color .2s ease; }
+  .btn-empty::after {
+    content: ""; position: absolute; left: -8%; right: -12%;
+    bottom: -.35em; height: .14em;
+    background: url("../img/hero/linkedin-rule.svg") no-repeat center / 100% 100%;
+    opacity: 0; transition: opacity .2s ease;
+  }
+  .btn-empty:hover, .btn-empty:focus-visible { color: var(--dgz-clay); }
+  .btn-empty:hover::after, .btn-empty:focus-visible::after { opacity: 1; }
+  .btn-empty:active { color: var(--dgz-orchid); }
+
+  .force-hover { color: var(--dgz-clay); }
+  .force-hover::after { opacity: 1; }
+  .force-pressed { color: var(--dgz-orchid); }
+
+  .todo {
+    border: 1px solid var(--dgz-rule); border-left: 4px solid var(--dgz-clay);
+    border-radius: 4px; padding: 1rem 1.15rem; margin-top: 1.75rem;
+    font-size: .82rem; line-height: 1.5; color: var(--dgz-fg-dim);
+  }
+  .todo strong { color: var(--dgz-bone); }
+  .todo ul { margin: .5rem 0 0; padding-left: 1.1rem; }
+  .todo li { margin: .3rem 0; }
+
+  /* The HUD frame, as the site declares it. */
+  .frame-demo {
+    position: relative; aspect-ratio: 16 / 9; max-width: 720px;
+    background: #14120F;
+    border: calc(20 * var(--dgz-u)) solid var(--dgz-orchid);
+    display: grid; place-items: center;
+  }
+  .frame-demo p { margin: 0; color: var(--dgz-fg-dim); font-size: .8rem; letter-spacing: .1em; text-transform: uppercase; }
+</style>
+</head>
+
+<body>
+
+<div class="bar">
+  <div class="wrap">
+    <label>
+      Type scale
+      <input id="scale" type="range" min="0.6" max="1.6" step="0.01" value="1">
+      <output id="scaleOut">1.00&times;</output>
+    </label>
+    <button type="button" id="reset">Reset</button>
+    <span class="live">Viewport <b id="vw">—</b> px &middot; root <b id="rootpx">—</b> px</span>
+  </div>
+</div>
+
+<div class="wrap shell">
+
+<div class="shell__bench">
+
+  <!-- ================================================================= -->
+  <section id="type">
+    <div class="sec-head">
+      <h2>Type</h2>
+      <p>Nine named styles. Every size is <code>clamp(floor, fluid, design)</code> on viewport <em>width</em>, multiplied by the scale above.</p>
+    </div>
+    <div id="specimens"></div>
+  </section>
+
+  <!-- ================================================================= -->
+  <section id="colour">
+    <div class="sec-head">
+      <h2>Colour</h2>
+      <p>Ten brandbook values. Dark-first: ink is the ground, bone is the type, the other eight are accents and never surfaces.</p>
+    </div>
+    <div class="swatches" id="swatches"></div>
+
+    <div class="roles">
+      <div class="role" style="border-left-color: var(--dgz-blue)">
+        <h3>Affordance &middot; blue</h3>
+        <p>&ldquo;You can act on this.&rdquo; Visible at rest on everything actionable, so it is the one genuinely reserved colour: blue on something inert is a promise the page does not keep.</p>
+      </div>
+      <div class="role" style="border-left-color: var(--dgz-clay)">
+        <h3>Accent &middot; clay</h3>
+        <p>&ldquo;Attention here.&rdquo; Not reserved &mdash; hover and a marked term mean the same thing, so the uses reinforce rather than collide. Hover is one application, not the definition.</p>
+      </div>
+      <div class="role" style="border-left-color: var(--dgz-orchid)">
+        <h3>Response &middot; orchid</h3>
+        <p>&ldquo;Your action registered.&rdquo; On screen for about 100ms during a click. Nothing is learned in 100ms, so it is the freest colour in the system.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <section id="button">
+    <div class="sec-head">
+      <h2>Button &mdash; Empty family</h2>
+      <p>The state <em>is</em> the colour. Nothing changes size or position, so a row never shifts under the cursor.</p>
+    </div>
+
+    <div class="states">
+      <div class="state">
+        <span class="state__tag">Empty &middot; rest</span>
+        <a class="btn-empty dgz-button" href="#button">Button</a>
+      </div>
+      <div class="state">
+        <span class="state__tag">EmptyHover &middot; <em>forced</em></span>
+        <a class="btn-empty dgz-button force-hover" href="#button">Button</a>
+      </div>
+      <div class="state">
+        <span class="state__tag">EmptyPressed &middot; <em>forced</em></span>
+        <a class="btn-empty dgz-button force-pressed" href="#button">Button</a>
+      </div>
+      <div class="state">
+        <span class="state__tag">Live &mdash; hover and hold</span>
+        <a class="btn-empty dgz-button" href="#button">Button</a>
+      </div>
+    </div>
+
+    <div class="todo">
+      <strong>Not built yet, and why.</strong>
+      <ul>
+        <li><strong>The framed family</strong> (Default, Hover, Pressed) is a cut slab &mdash; a stepped notch top-left, a chamfer bottom-right. No <code>border-radius</code> produces that; it needs <code>clip-path: polygon()</code>, and the vertices come from one SVG export.</li>
+        <li><strong>The underline</strong> is still <code>linkedin-rule.svg</code>, a single-colour rule. The set draws it two-toned and stepped, so it needs re-exporting as <code>button-underline.svg</code>.</li>
+        <li><strong>EmptyPressed</strong> is standing in as orchid. The set draws a magenta visibly hotter; its hex has not been read.</li>
+        <li><strong>MenuButton</strong> is a drawn graphic rather than a shape with type in it, so it ships as three SVGs, one per state colour.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ================================================================= -->
+  <section id="frame">
+    <div class="sec-head">
+      <h2>HUD frame</h2>
+      <p><code>Frame_window</code> &mdash; a 20px border in orchid. No asset: the file states a border, and a border scales exactly and re-colours in one line.</p>
+    </div>
+    <div class="frame-demo"><p>Detail1 and Details2 still missing</p></div>
+  </section>
+
+</div><!-- /.shell__bench -->
+
+<!-- ===================================================================
+     The live view. Not a screenshot -- the real index.html, same origin,
+     so the scale knob writes straight into its document and the type
+     system is judged where it is actually used.
+     =================================================================== -->
+<aside class="shell__view">
+  <div class="view__head">
+    <span>Live site</span>
+    <button type="button" data-device="phone"   aria-pressed="true">Phone</button>
+    <button type="button" data-device="tablet"  aria-pressed="false">Tablet</button>
+    <button type="button" data-device="desktop" aria-pressed="false">Desktop</button>
+    <a href="../index.html" target="_blank" rel="noopener">Open &rarr;</a>
+  </div>
+  <div class="view__shell">
+    <div class="view__stage" id="viewStage">
+      <iframe id="preview" src="../index.html" title="Live preview of the home page"></iframe>
+    </div>
+  </div>
+  <p class="view__note" id="viewNote">&mdash;</p>
+</aside>
+
+</div><!-- /.shell -->
+
+<script>
+(function () {
+  "use strict";
+
+  /* Always reload brand.css from disk before reading anything.
+
+     A workbench that shows a cached stylesheet is worse than no workbench: it
+     reports on a file that is not the one being edited, and it does it
+     silently. This cost an hour on the site already -- twice a change looked
+     like it had failed when the browser was simply serving the old CSS. Here
+     it is not a habit to remember, it is the first thing the page does. */
+  function freshen(done) {
+    var old = document.querySelector('link[href*="brand.css"]');
+    if (!old) { done(); return; }
+    var fresh = document.createElement("link");
+    fresh.rel = "stylesheet";
+    fresh.href = "../css/brand.css?v=" + Date.now();
+    fresh.onload = fresh.onerror = function () { old.remove(); done(); };
+    document.head.appendChild(fresh);
+  }
+
+  /* The specimen list. Metrics are READ FROM THE STYLESHEET at runtime, never
+     restated here -- only the name, class and sample string live in this file,
+     because those are the things brand.css has no opinion about. */
+  var STYLES = [
+    ["H0_DGZ",            "dgz-h0",          "H 0 - Chakra Petch - Light - Spacing -2%"],
+    ["H1_DGZ",            "dgz-h1",          "Header 1 - Chakra Petch - SemiBold"],
+    ["H2_DGZ",            "dgz-h2",          "Header 2 - Chakra Petch - SemiBold"],
+    ["Sub_DGZ",           "dgz-sub",         "Subtitle - Chakra Petch - Bold - spacing"],
+    ["Button_DGZ",        "dgz-button",      "Button - Space Grotesk - Bold - spacing"],
+    ["Caption_DGZ",       "dgz-caption",     "Caption - Chakra Petch - Bold - spacing"],
+    ["MobileCaption_DGZ", "dgz-caption",     "Mobile Caption - same style, 0.02em tracking"],
+    ["Body_DGZ",          "dgz-body",        "Fourteen years making things look like something: 2D and pixel game art, stylized 3D characters and props, concept art and the visual systems that keep a team consistent."],
+    ["BodyAccent_DGZ",    "dgz-body-accent", "Fourteen years making things look like something: 2D and pixel game art, stylized 3D characters and props, concept art and the visual systems that keep a team consistent."]
+  ];
+
+  var WIDTHS = [390, 480, 768, 1280, 1920, 2560];
+
+  var host = document.getElementById("specimens");
+  var DECL = {};
+
+  /* Read each style's font-size DECLARATION out of brand.css and evaluate it
+     ourselves, so the ramp below is the real clamp at each width rather than a
+     straight-line guess. Measuring the computed size only tells us this
+     window; parsing the rule tells us every window, and it still comes from
+     the stylesheet rather than from a number restated in this file. */
+  function readRules() {
+    var wanted = /^\.(dgz-h0|dgz-h1|dgz-h2|dgz-sub|dgz-caption|dgz-button|dgz-body|dgz-body-accent)$/;
+    for (var i = 0; i < document.styleSheets.length; i++) {
+      var rules;
+      try { rules = document.styleSheets[i].cssRules; } catch (e) { continue; }
+      if (!rules) continue;
+      for (var j = 0; j < rules.length; j++) {
+        var r = rules[j];
+        if (!r.selectorText || !r.style || !r.style.fontSize) continue;
+        r.selectorText.split(",").forEach(function (sel) {
+          sel = sel.trim();
+          if (wanted.test(sel)) DECL[sel.slice(1)] = r.style.fontSize;
+        });
+      }
+    }
+  }
+
+  /* clamp(Arem, Brem + Cvw, Drem) -> { min, slopePerPx, max } in px */
+  function parseClamp(decl, rootpx) {
+    if (!decl) return null;
+    var m = decl.match(
+      /clamp\(\s*([\d.]+)rem\s*,\s*([\d.-]+)rem\s*\+\s*([\d.]+)vw\s*,\s*([\d.]+)rem\s*\)/
+    );
+    if (!m) return null;
+    return {
+      min: parseFloat(m[1]) * rootpx,
+      base: parseFloat(m[2]) * rootpx,
+      vw: parseFloat(m[3]) / 100,
+      max: parseFloat(m[4]) * rootpx
+    };
+  }
+
+  function sizeAt(c, width, scaleValue) {
+    var pref = c.base + c.vw * width;
+    return Math.min(Math.max(pref, c.min), c.max) * scaleValue;
+  }
+
+  STYLES.forEach(function (s) {
+    var name = s[0], cls = s[1], sample = s[2];
+    var el = document.createElement("div");
+    el.className = "spec";
+    el.innerHTML =
+      '<div class="spec__meta">' +
+        '<span class="spec__name">' + name + '</span>' +
+        '<span data-f="family"></span>' +
+        '<span data-f="weight"></span>' +
+        '<span data-f="track"></span>' +
+        '<span data-f="lh"></span>' +
+        '<span class="spec__now" data-f="now"></span>' +
+      '</div>' +
+      '<div class="spec__sample ' + cls + '"></div>' +
+      '<div class="ramp" data-f="ramp"></div>';
+    el.querySelector(".spec__sample").textContent = sample;
+    if (name === "MobileCaption_DGZ") {
+      el.querySelector(".spec__sample").style.letterSpacing = "0.02em";
+    }
+    el.dataset.cls = cls;
+    host.appendChild(el);
+  });
+
+  function shortFamily(f) {
+    return f.split(",")[0].replace(/["']/g, "");
+  }
+
+  function refresh() {
+    var vw = window.innerWidth;
+    var rootpx = parseFloat(getComputedStyle(document.documentElement).fontSize);
+    document.getElementById("vw").textContent = vw;
+    document.getElementById("rootpx").textContent = rootpx;
+
+    [].forEach.call(host.children, function (el) {
+      var sample = el.querySelector(".spec__sample");
+      var cs = getComputedStyle(sample);
+      var set = function (k, v) { el.querySelector('[data-f="' + k + '"]').textContent = v; };
+      set("family", shortFamily(cs.fontFamily));
+      set("weight", cs.fontWeight);
+      set("track", "tracking " + cs.letterSpacing);
+      set("lh", "line " + (parseFloat(cs.lineHeight) / parseFloat(cs.fontSize)).toFixed(3));
+      set("now", parseFloat(cs.fontSize).toFixed(1) + "px here");
+
+      /* The ramp: what this style really resolves to across the range,
+         evaluated from the parsed clamp. A cell is marked when the clamp has
+         flattened -- that is where the fluid part has stopped doing anything
+         and the floor or the ceiling is carrying the size. Seeing where each
+         style flattens is the whole reason this row exists. */
+      var ramp = el.querySelector('[data-f="ramp"]');
+      var c = parseClamp(DECL[el.dataset.cls], rootpx);
+      ramp.innerHTML = "";
+      if (!c) { ramp.textContent = "no fluid declaration found"; return; }
+
+      var sv = parseFloat(document.getElementById("scale").value);
+      WIDTHS.forEach(function (w) {
+        var px = sizeAt(c, w, sv);
+        var pref = c.base + c.vw * w;
+        var span = document.createElement("span");
+        if (pref <= c.min) span.className = "is-floor";
+        else if (pref >= c.max) span.className = "is-ceil";
+        span.innerHTML = w + " &rarr; <b>" + px.toFixed(1) + "</b>";
+        span.title = pref <= c.min ? "at the floor"
+                   : pref >= c.max ? "at the ceiling"
+                   : "fluid";
+        ramp.appendChild(span);
+      });
+    });
+  }
+
+  /* --- palette ------------------------------------------------------- */
+  var PALETTE = [
+    ["--dgz-ink",      "ground",    "Near-black, WARM. The ground"],
+    ["--dgz-bone",     "ground",    "The type colour"],
+    ["--dgz-sea-deep", "sea",       ""],
+    ["--dgz-sea",      "sea",       ""],
+    ["--dgz-blue",     "sea",       "The brightest note. Not a neon"],
+    ["--dgz-canyon",   "canyon",    "Para&iacute;ba, rusticity"],
+    ["--dgz-clay",     "canyon",    ""],
+    ["--dgz-earth",    "canyon",    ""],
+    ["--dgz-purple",   "cyberpunk", ""],
+    ["--dgz-orchid",   "cyberpunk", "Muted mid purple, not a hot magenta"]
+  ];
+
+  var sw = document.getElementById("swatches");
+  var root = getComputedStyle(document.documentElement);
+  PALETTE.forEach(function (c) {
+    var v = root.getPropertyValue(c[0]).trim();
+    var d = document.createElement("div");
+    d.className = "sw";
+    d.innerHTML =
+      '<div class="sw__chip" style="background:' + v + '"></div>' +
+      '<div class="sw__body">' +
+        '<div class="sw__name">' + c[0].replace("--dgz-", "") + '</div>' +
+        '<div class="sw__hex">' + v.toUpperCase() + ' &middot; ' + c[1] + '</div>' +
+        (c[2] ? '<div class="sw__note">' + c[2] + '</div>' : '') +
+      '</div>';
+    sw.appendChild(d);
+  });
+
+  /* --- the live view -------------------------------------------------- */
+  var DEVICES = {
+    phone:   { w: 390,  h: 844,  label: "iPhone-class" },
+    tablet:  { w: 834,  h: 1112, label: "tablet portrait" },
+    desktop: { w: 1440, h: 810,  label: "laptop" }
+  };
+
+  var frame = document.getElementById("preview");
+  var stage = document.getElementById("viewStage");
+  var note = document.getElementById("viewNote");
+  var device = "phone";
+
+  function fitView() {
+    var d = DEVICES[device];
+    /* Budget: whatever is left beside the bench, capped so the column never
+       eats the page. The iframe keeps its REAL pixel size and is scaled with
+       a transform, so the media queries inside still see a true 390px -- a
+       CSS-resized iframe would lie about the viewport, which is the one thing
+       a preview must not do. */
+    var budgetW = Math.min(420, Math.max(260, window.innerWidth * 0.26));
+    var budgetH = Math.max(320, window.innerHeight - 190);
+    var k = Math.min(budgetW / d.w, budgetH / d.h);
+
+    frame.style.width = d.w + "px";
+    frame.style.height = d.h + "px";
+    frame.style.transform = "scale(" + k.toFixed(4) + ")";
+    stage.style.width = Math.round(d.w * k) + "px";
+    stage.style.height = Math.round(d.h * k) + "px";
+    note.innerHTML = d.w + " &times; " + d.h + " &middot; " + d.label +
+                     " &middot; shown at " + Math.round(k * 100) + "%";
+  }
+
+  [].forEach.call(document.querySelectorAll(".view__head [data-device]"), function (b) {
+    b.addEventListener("click", function () {
+      device = b.dataset.device;
+      [].forEach.call(document.querySelectorAll(".view__head [data-device]"), function (o) {
+        o.setAttribute("aria-pressed", String(o === b));
+      });
+      fitView();
+    });
+  });
+
+  /* Push the knob into the preview. Same origin, so this reaches the real
+     document rather than posting a message to a page that has to cooperate.
+     Also re-busts the preview's own stylesheets, for the same reason the
+     bench busts its own: a cached file makes the bench report on a page that
+     is not the one on disk. */
+  function pushToView() {
+    var doc;
+    try { doc = frame.contentDocument; } catch (e) { return; }
+    if (!doc || !doc.documentElement) return;
+    doc.documentElement.style.setProperty("--dgz-type-scale", scale.value);
+  }
+
+  function freshenView() {
+    var doc;
+    try { doc = frame.contentDocument; } catch (e) { return; }
+    if (!doc) return;
+    var v = Date.now();
+    [].forEach.call(doc.querySelectorAll('link[rel="stylesheet"][href*="css/"]'), function (l) {
+      l.href = l.href.split("?")[0] + "?v=" + v;
+    });
+    pushToView();
+  }
+
+  frame.addEventListener("load", function () { freshenView(); });
+
+  /* --- the scale knob ------------------------------------------------ */
+  var scale = document.getElementById("scale");
+  var scaleOut = document.getElementById("scaleOut");
+
+  function applyScale() {
+    document.documentElement.style.setProperty("--dgz-type-scale", scale.value);
+    scaleOut.innerHTML = parseFloat(scale.value).toFixed(2) + "&times;";
+    pushToView();
+    refresh();
+  }
+
+  scale.addEventListener("input", applyScale);
+  document.getElementById("reset").addEventListener("click", function () {
+    scale.value = 1;
+    applyScale();
+  });
+
+  window.addEventListener("resize", function () { refresh(); fitView(); });
+
+  /* Nothing is measured until the real stylesheet is on the page. */
+  freshen(function () {
+    readRules();
+    if (document.fonts && document.fonts.ready) {
+      document.fonts.ready.then(function () { refresh(); fitView(); });
+    }
+    refresh();
+    fitView();
+  });
+})();
+</script>
+
+</body>
+</html>
