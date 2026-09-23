@@ -76,6 +76,18 @@ body.dgz-hero {
   /* Side inset, on the window. Floor so it survives a phone, fluid middle,
      the design's 260 as the ceiling. */
   --pad: clamp(1.25rem, 9vw, 16.25rem);
+
+  /* Top and bottom content margin -- ONE value, measured from the INSIDE of
+     the frame, used by both ends. João: "a margem de conteudo superior e
+     inferior devem ser iguais."
+
+     It is deliberately a single custom property rather than two matching
+     numbers: two numbers that happen to agree drift the first time one of
+     them is tuned, and this pair is the thing the eye checks first on a
+     framed composition. The roles line and the foot are the two blocks that
+     belong to the FRAME rather than to the painting, which is why they share
+     it while the headline and the mark stay anchored to the artwork. */
+  --edge: clamp(1rem, 5vh, 3.5rem);
 }
 
 /* The art covers from the TOP, centred horizontally, growing with the width. */
@@ -153,7 +165,7 @@ body.dgz-hero {
   position: absolute;
   left: 0;
   right: 0;
-  bottom: clamp(1rem, 3.2vh, 3.25rem);
+  bottom: calc(20 * var(--dgz-u) + var(--edge));
   z-index: 1;
   display: flex;
   flex-direction: column;
@@ -183,10 +195,15 @@ body.dgz-hero {
    Horizontal: the window, via `--pad`.
    -------------------------------------------------------------------------- */
 
-/* Caption_DGZ, centred at the top. */
+/* Caption_DGZ, centred at the top.
+
+   It belongs to the FRAME, not to the painting: it sits in the band between
+   the purple bar and the top of the character's hair, so it is measured from
+   the border rather than as a share of the artwork. Anchoring it to the art
+   pushed it down on a short window, which read as too much padding. */
 .stage__roles {
   position: absolute;
-  top: calc(8.7 * var(--img-h) / 100);      /* 94 / 1080 */
+  top: calc(20 * var(--dgz-u) + var(--edge));
   left: var(--pad);
   right: var(--pad);
   text-align: center;
