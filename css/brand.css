@@ -46,12 +46,14 @@
   --dgz-rule:       #2E2A26;              /* hairlines on the warm dark ground */
 
   /* --- type ------------------------------------------------------------ */
-  /* The display face is isolated behind ONE property on purpose. TT Carvist
-     ships without a web licence as a recorded, accepted risk; if a notice
-     ever arrives, swapping to Big Shoulders Display is this one line.
-     See DuminguzHUB/docs/decisions/log.md, 2026-08-31. */
-
-  --dgz-font-display: "TT Carvist", "Big Shoulders Display", "Oswald", "Arial Narrow", sans-serif;
+  /* The display face is isolated behind ONE property on purpose, which is what
+     made this swap a single line. Chakra Petch replaced TT Carvist on
+     2026-09-23: TT Carvist is commercial and has no web licence, and the face
+     it was standing in for is geometric and constructed, not the condensed
+     gothic the earlier fallback assumed. Chakra Petch carries Medium 500 and
+     SemiBold 600 natively, which are exactly the two roles the brand uses.
+     See DuminguzHUB/docs/decisions/log.md, 2026-09-23. */
+  --dgz-font-display: "Chakra Petch", "Rajdhani", "Big Shoulders Display", sans-serif;
   --dgz-font-body:    "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
   /* Eyebrow = Medium, Header = DemiBold, Body = Regular, accent = Bold */
@@ -60,27 +62,6 @@
   --dgz-w-body:     400;
   --dgz-w-body-b:   700;
 }
-
-/* --------------------------------------------------------------------------
-   TT Carvist
-   Drop the web files into css/font/ and fill the paths below. Until they
-   exist the stack falls through to Big Shoulders Display, so the page never
-   renders in a default serif while this is pending.
-   -------------------------------------------------------------------------- */
-/*
-@font-face {
-  font-family: "TT Carvist";
-  src: url("font/TTCarvist-Medium.woff2") format("woff2");
-  font-weight: 500;
-  font-display: swap;
-}
-@font-face {
-  font-family: "TT Carvist";
-  src: url("font/TTCarvist-DemiBold.woff2") format("woff2");
-  font-weight: 600;
-  font-display: swap;
-}
-*/
 
 /* --------------------------------------------------------------------------
    Application
