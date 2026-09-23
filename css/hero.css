@@ -38,6 +38,9 @@ body.dgz-hero {
 .stage {
   position: relative;
   container-type: inline-size;
+  /* One design pixel, as a fraction of the stage. The type scale in brand.css
+     is authored at 1920 and multiplies by this, so it rides the stage. */
+  --dgz-u: 0.0520833cqw;           /* 100 / 1920 */
   width: min(100vw, 177.7778vh);   /* 16:9, whichever axis runs out first */
   aspect-ratio: 16 / 9;
   overflow: hidden;
@@ -227,6 +230,10 @@ body.dgz-hero {
   .stage {
     width: min(100vw, 56.25vh);    /* 9:16 */
     aspect-ratio: 9 / 16;
+    /* The mobile frame is authored at 1080 wide and states its own sizes in
+       its own pixels -- MobileCaption_DGZ is 26px there, not 26 scaled down --
+       so the design unit is a fraction of 1080, not of 1920. */
+    --dgz-u: 0.0925926cqw;         /* 100 / 1080 */
   }
 
   /* The same 20px border, now against a 1080-wide frame. The border is

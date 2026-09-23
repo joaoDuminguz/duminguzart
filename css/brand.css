@@ -56,11 +56,116 @@
   --dgz-font-display: "Chakra Petch", "Rajdhani", "Big Shoulders Display", sans-serif;
   --dgz-font-body:    "Space Grotesk", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
 
-  /* Eyebrow = Medium, Header = DemiBold, Body = Regular, accent = Bold */
+  /* Eyebrow = Medium, Header = DemiBold, Body = Regular, accent = Bold.
+     STALE: superseded by the named scale below, which uses 300/600/700 for the
+     display face and never uses 500. Kept until style.css stops reading them. */
   --dgz-w-eyebrow:  500;
   --dgz-w-header:   600;
   --dgz-w-body:     400;
   --dgz-w-body-b:   700;
+
+  /* The design unit.
+
+     The type scale below is authored at 1920 wide, so every size is written as
+     a count of design pixels times this unit. On a normal flowing page one
+     design pixel is one CSS pixel. Inside a fixed-ratio stage the stage sets
+     it to a fraction of its own width instead, and the whole scale rides the
+     stage with no second set of numbers to keep in sync. */
+  --dgz-u: 1px;
+}
+
+/* --------------------------------------------------------------------------
+   Type scale -- the eight named styles from the Figma text styles.
+   Set by João 2026-09-23; spec at
+   DuminguzHUB/portfolio/duminguz-art/ui/tokens.md
+
+   Line height is a ratio rather than the stated px, so a style holds at any
+   size. Every one of the eight lands between 1.286 and 1.308, which is a
+   designed constant and not eight separate decisions.
+   -------------------------------------------------------------------------- */
+
+.dgz-h0, .dgz-h1, .dgz-h2, .dgz-sub, .dgz-caption {
+  font-family: var(--dgz-font-display);
+}
+
+.dgz-button, .dgz-body {
+  font-family: var(--dgz-font-body);
+}
+
+/* H0_DGZ -- Light. The only place the display face is set light, and the only
+   one with negative tracking: at 116 the letters close up on their own. */
+.dgz-h0 {
+  font-weight: 300;
+  font-size: calc(116 * var(--dgz-u));
+  line-height: 1.3017;             /* 151 / 116 */
+  letter-spacing: -0.02em;
+  text-transform: uppercase;
+}
+
+/* H1_DGZ -- SemiBold */
+.dgz-h1 {
+  font-weight: 600;
+  font-size: calc(72 * var(--dgz-u));
+  line-height: 1.3056;             /* 94 / 72 */
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* H2_DGZ -- 700. Figma labels this style "SemiBold" but sets 700; the label is
+   the odd one out, since H1 is labelled SemiBold and is 600. Reproduced as the
+   value, not as the label. */
+.dgz-h2 {
+  font-weight: 700;
+  font-size: calc(58 * var(--dgz-u));
+  line-height: 1.2931;             /* 75 / 58 */
+  letter-spacing: 0.02em;
+  text-transform: uppercase;
+}
+
+/* Sub_DGZ -- Bold. The one display style that is not uppercase. */
+.dgz-sub {
+  font-weight: 700;
+  font-size: calc(46 * var(--dgz-u));
+  line-height: 1.3043;             /* 60 / 46 */
+  letter-spacing: 0.12em;
+}
+
+/* Caption_DGZ -- Bold, very loose. 0.26em is the widest tracking in the system
+   and it is what makes a caption read as a label rather than as small text. */
+.dgz-caption {
+  font-weight: 700;
+  font-size: calc(26 * var(--dgz-u));
+  line-height: 1.3077;             /* 34 / 26 */
+  letter-spacing: 0.26em;
+  text-transform: uppercase;
+}
+
+/* MobileCaption_DGZ -- the same style at 0.02em.
+
+   This is the only style in the scale with a second breakpoint, and the change
+   is tracking alone: 0.26em on a 1080-wide frame spends about a third of the
+   width on air. Applied by aspect ratio rather than by device width, to match
+   how the stage chooses its composition. */
+@media (max-aspect-ratio: 1 / 1) {
+  .dgz-caption { letter-spacing: 0.02em; }
+}
+
+/* Button_DGZ -- Bold */
+.dgz-button {
+  font-weight: 700;
+  font-size: calc(28 * var(--dgz-u));
+  line-height: 1.2857;             /* 36 / 28 */
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+/* Body_DGZ -- Regular. Same size and metrics as the button; only weight and
+   case separate them. */
+.dgz-body {
+  font-weight: 400;
+  font-size: calc(28 * var(--dgz-u));
+  line-height: 1.2857;             /* 36 / 28 */
+  letter-spacing: 0.04em;
 }
 
 /* --------------------------------------------------------------------------
